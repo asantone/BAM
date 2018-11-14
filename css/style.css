@@ -1,1 +1,12 @@
+/* Add custom BAMJ styles here*/
+/* Take care to override Bootstrap styles when needed -- might require some extra css commands */
+/* https://stackoverflow.com/questions/20721248/how-can-i-override-bootstrap-css-styles */
 
+/*example from that page -- no idea if this is the best way or not*/
+/* New way of prioritization */
+/*
+#bootstrap-overrides h1 { 
+  line-height: 1;
+  color: inherit;
+}
+*/
