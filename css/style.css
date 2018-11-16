@@ -83,7 +83,7 @@
 }
 
 body#no_bootstrap {
-   background-color: var(--light_grayish_yellow);
+   background-color: goldenrod;
 }
 
 #no_bootstrap .main_column {
