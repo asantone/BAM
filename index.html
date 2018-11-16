@@ -1,148 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Examining breed trends of Seattle's pets: 2015-2018</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>Examining breed trends of Seattle's pets: 2015-2018</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-  <!-- A moved scripts to end of body tag-->
-  <!-- M added the link to our custom css -->
-  <!-- M moved the chunk of css originally in this HTML file to the top of the custom css file -->
-  <!-- Might be better to have this original css in a separate file. We'll see. -->
-  <link rel="stylesheet" href="css/style.css">
-  
+    <!-- A moved scripts to end of body tag-->
+    <!-- M added the link to our custom css -->
+    <!-- M moved the chunk of css originally in this HTML file to the top of the custom css file -->
+    <!-- Might be better to have this original css in a separate file. We'll see. -->
+    <link rel="stylesheet" href="css/style2.css">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css">
+
 </head>
 <body id="no_bootstrap" style="background-color: #F8F8DC;">
 
 <nav class="navbar navbar-inverse" style="margin-bottom: 0px;">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="#"><img src="img/Flag_of_Seattle.svg" width="30"></a>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><img src="img/Flag_of_Seattle.svg" width="30"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">Introduction</a></li>
+                <li><a href="#">Problem Statement</a></li>
+                <li><a href="#">Team BAMJ</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>
+        </div>
     </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Introduction</a></li>
-        <li><a href="#">Problem Statement</a></li>
-        <li><a href="#">Team BAMJ</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      </ul>
-    </div>
-  </div>
 </nav>
-  
-<div class="container-fluid text-center">    
-  <div class="row ">
+
+<div class="container-fluid text-center">
+    <div class="row ">
 
 
-    <div class="col-sm-12 text-left main_column" id="main_column" >
-      <h1 style="color: #475d74; text-align: center; margin-bottom: 2rem; ">Examining breed trends of Seattle's Pets, 2015 to 2018<br>We have to figure out how to fit linked vizzes on one screenful.</h1><h2 style="text-align: center; color: #362724; margin-bottom: 3rem;">Meantime, we can plunk our vizzes down here.</h2>
+        <div class="col-sm-12 text-left main_column" id="main_column" >
+            <h1 style="color: #475d74; text-align: center; margin-bottom: 2rem; ">Examining breed trends of Seattle's Pets, 2015 to 2018<br>We have to figure out how to fit linked vizzes on one screenful.</h1><h2 style="text-align: center; color: #362724; margin-bottom: 3rem;">Meantime, we can plunk our vizzes down here.</h2>
 
-      <div class="row  row1">
-      <div class="col-sm-5 text-left" style="margin-left: 0rem;">
-        <h2 style="color: #639ac3;">Lede </h2>
+            <div class="row  row1">
+                <div class="col-sm-5 text-left" style="margin-left: 0rem;">
+                    <h2 style="color: #639ac3;">Lede </h2>
 
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      </div><!--end div col-sm-6-->
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                </div><!--end div col-sm-6-->
 
-      <div class="col-sm-7 text-left" style="border: #d9c191 1px dotted; margin-left: 0rem;">
-        <h3>Line chart </h3>
-        <h4>Pet ownership, 2015 - 2018</h4>
+                <div class="col-sm-7 text-left" style="border: #d9c191 1px dotted; margin-left: 0rem;">
+                    <h3>Line chart </h3>
+                    <h4>Pet ownership, 2015 - 2018</h4>
 
-        <div id="viz1" style="height: 300px;"><p>#viz1 here -- how deep should the div be?</p>
+                    <div id="viz1" style="height: 300px;"><p>#viz1 here -- how deep should the div be?</p>
+
+                    </div>
+                </div><!--end div col-sm-6-->
+
+            </div><!-- end div row content -->
+
+
+            <div class="row content row2">
+                <div class="col-sm-12 text-left" style="margin-left: 0;">
+                    <h2 style="color: #639ac3;">Where are the pets located? </h2>
+
+                </div><!--end div col-sm-12-->
+
+
+                <div class="col-sm-12 text-left" style="margin-left: 0;">
+
+                    <div id="#viz2" style="border: #d9c191 1px dotted; margin-left: 0; height: 500px;">
+                        <h3>Choropleth </h3>
+                        <h4>#viz2</h4>
+                    </div>
+
+                </div><!--end div col-sm-12-->
+
+            </div><!-- end div row2 content -->
+
+            <!-------------------->
+            <!-- Adam's map row -->
+            <!-------------------->
+            <div class="row content row2">
+                <div class="col-sm-12 text-left" style="margin-left: 0;">
+                    <h2 style="color: #639ac3;">Where are the adoption sites located? </h2>
+                </div><!--end div col-sm-12-->
+                <div class="col-sm-12 text-left" style="margin-left: 0;">
+                    <div id="map" style="border: #d9c191 1px dotted; margin-left: 0; height: 500px;">
+                        <h3>Adoption Sites </h3>
+                        <h4>#map</h4>
+                    </div>
+                </div><!--end div col-sm-12-->
+            </div><!-- end div row2 content -->
+            <!------------------------>
+            <!-- end Adam's map row -->
+            <!------------------------>
+
+
+
+
+            <div class="row content row2">
+                <div class="col-sm-12 text-left" style="margin-left: 0;">
+                    <h2 style="color: #639ac3;">Innovative viz here? </h2>
+
+                </div><!--end div col-sm-12-->
+
+
+                <div class="col-sm-12 text-left" style="margin-left: 0;">
+
+                    <div id="#viz3" style="border: #d9c191 1px dotted; margin-left: 0; height: 500px;">
+                        <h3>Innovative viz </h3>
+                        <h4>#viz3</h4>
+                    </div>
+
+                </div><!--end div col-sm-12-->
+
+            </div><!-- end div row3 content -->
+
+
 
         </div>
-      </div><!--end div col-sm-6-->
-
-    </div><!-- end div row content -->
-
-
-      <div class="row content row2">
-        <div class="col-sm-12 text-left" style="margin-left: 0;">
-          <h2 style="color: #639ac3;">Where are the pets located? </h2>
-
-        </div><!--end div col-sm-12-->
-
-
-        <div class="col-sm-12 text-left" style="margin-left: 0;">
-
-          <div id="#viz2" style="border: #d9c191 1px dotted; margin-left: 0; height: 500px;">
-            <h3>Choropleth </h3>
-            <h4>#viz2</h4>
-          </div>
-
-        </div><!--end div col-sm-12-->
-
-      </div><!-- end div row2 content -->
-      
-      <!-------------------->
-      <!-- Adam's map row -->
-      <!-------------------->
-      <div class="row content row2">
-        <div class="col-sm-12 text-left" style="margin-left: 0;">
-          <h2 style="color: #639ac3;">Where are the adoption sites located? </h2>
-        </div><!--end div col-sm-12-->
-        <div class="col-sm-12 text-left" style="margin-left: 0;">
-           <div id="#map" style="border: #d9c191 1px dotted; margin-left: 0; height: 500px;">
-            <h3>Adoption Site Locations</h3>
-            <h4>#map</h4>
-           </div>
-        </div><!--end div col-sm-12-->
-      </div><!-- end div row2 content -->
-      <!------------------------>
-      <!-- end Adam's map row -->
-      <!------------------------>
-      
-      
-      
-
-      <div class="row content row2">
-        <div class="col-sm-12 text-left" style="margin-left: 0;">
-          <h2 style="color: #639ac3;">Innovative viz here? </h2>
-
-        </div><!--end div col-sm-12-->
-
-
-        <div class="col-sm-12 text-left" style="margin-left: 0;">
-
-          <div id="#viz3" style="border: #d9c191 1px dotted; margin-left: 0; height: 500px;">
-            <h3>Innovative viz </h3>
-            <h4>#viz3</h4>
-          </div>
-
-        </div><!--end div col-sm-12-->
-
-      </div><!-- end div row3 content -->
-
-
 
     </div>
-
-  </div>
 </div>
 
 <footer class="container-fluid text-center">
-  <p>Please Adopt your Pets!</p>
+    <p>Please Adopt your Pets!</p>
 </footer>
 
-  
-  
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!--<script src="http://code.jquery.com/jquery-latest.min.js"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
 <!--<script src="js/bootstrap.min.js"></script>-->
 <script src="js/d3.min.js"></script>
 <script src="js/leaflet.js"></script>
-<script src="js/main.js"></script>  
+<script src="js/main.js"></script>
 </body>
 </html>
 
