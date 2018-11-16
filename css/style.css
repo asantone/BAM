@@ -82,7 +82,7 @@
   --slightly_desaturated_blue: #639AC3;
 }
 
-body {
+#no-bootstrap {
     background-color: papayawhip;   
 }
 
