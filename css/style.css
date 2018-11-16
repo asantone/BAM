@@ -82,11 +82,6 @@
   --slightly_desaturated_blue: #639AC3;
 }
 
-#no-bootstrap {
-    background-color: papayawhip;   
-}
-
-div.main_column {
+#no-bootstrap div.main_column {
   background-color: var(--light_grayish_yellow);
-   background-color: lightgoldenrodyellow;
 }
