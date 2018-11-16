@@ -48,14 +48,14 @@ points.forEach(function(d){
         .addTo(pointsGroup);
 });
 
-var layer1 = L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+var layer1 = L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
         detectRetina: true,
         attribution: "&copy; " + "<a href='http://openstreetmap.org'>OpenStreetMap</a>" + " Contributors"
     }),
-    layer2 = L.tileLayer("http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png", {
+    layer2 = L.tileLayer("https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png", {
         attribution: "Thunderforest"
     }),
-    layer3 = L.tileLayer.wms("http://basemap.nationalmap.gov/ArcGIS/services/USGSImageryTopo/MapServer/WMSServer", {
+    layer3 = L.tileLayer.wms("https://basemap.nationalmap.gov/ArcGIS/services/USGSImageryTopo/MapServer/WMSServer", {
         layers: "0",
         format: "image/png",
         transparent: false,
