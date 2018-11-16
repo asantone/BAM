@@ -52,9 +52,9 @@ var layer1 = L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
         detectRetina: true,
         attribution: "&copy; " + "<a href='http://openstreetmap.org'>OpenStreetMap</a>" + " Contributors"
     }),
-    layer2 = L.tileLayer("https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png", {
-        attribution: "Thunderforest"
-    }),
+//     layer2 = L.tileLayer("https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png", {
+//         attribution: "Thunderforest"
+//     }),
     layer3 = L.tileLayer.wms("https://basemap.nationalmap.gov/ArcGIS/services/USGSImageryTopo/MapServer/WMSServer", {
         layers: "0",
         format: "image/png",
@@ -63,8 +63,8 @@ var layer1 = L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
     });
 
 var baseLayers = {
-        "osm": layer1,
-        "thunderforest": layer2
+        "osm": layer1 //,
+        //"thunderforest": layer2
     },
     subLayers = { "USGS": layer3, "Points": pointsGroup };
 
