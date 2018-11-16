@@ -5,7 +5,8 @@
 // "D3 + Leaflet"
 // http://bl.ocks.org/1Cr18Ni9/d72b6ba95285b80fe4c7498e784a8e0c
 
-
+//these are locations of pet adoption sites/stores (see data/adoptionSites.csv for details)
+//the 'achieve' part is legacy from the example I was basing this on...could be used for other purposes related to pet adoption? 
 var points = [
     {latlng: [	47.638167	,	-122.3766	],  achieve: 0.34},
     {latlng: [	47.572181	,	-122.37051	],  achieve: 0.34},
