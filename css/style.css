@@ -92,3 +92,10 @@
 footer {
     background-color: #d9c191;
 }
+
+/*--------- Adam's Map ------------------------------------------------*/
+#map{ width:100%; height:500px; }
+.tooltip{ width: 80px; height: 80px; position: absolute; left: -9999p; }
+.tooltip > svg{ margin:auto; display: block; }
+/*---------------------------------------------------------------------*/
+
