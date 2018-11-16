@@ -86,6 +86,6 @@ body#no_bootstrap {
    background-color: goldenrod;
 }
 
-#no_bootstrap .main_column {
+body#no_bootstrap .main_column {
   background-color: var(--light_grayish_yellow);
 }
