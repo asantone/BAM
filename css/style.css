@@ -37,3 +37,7 @@
   --very_dark_grayish_red: #362724;
   --slightly_desaturated_blue: #639AC3;
 }
+
+.main_column {
+  background-color: var(--light_grayish_yellow);
+}
