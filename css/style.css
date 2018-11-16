@@ -82,6 +82,8 @@
   --slightly_desaturated_blue: #639AC3;
 }
 
-#no-bootstrap div.main_column {
+
+
+#no_bootstrap div.main_column {
   background-color: var(--light_grayish_yellow);
 }
