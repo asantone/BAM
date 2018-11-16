@@ -61,6 +61,11 @@
  * Example of using the variables: "background-color: var(--very_light_gray);"
 */
 
+/* Ignore these for now - until we can easily override boostrap colors using them
+ * Meantime, I'm styling this stuff locally (bad, I know, but I'm desparate.)
+ */
+
+/*
 :root {
   --very_light_gray: #DBDBDB;
   --grayish_cyan: #B0B5B3;
@@ -81,11 +86,9 @@
   --very_dark_grayish_red: #362724;
   --slightly_desaturated_blue: #639AC3;
 }
+*/
 
-body#no_bootstrap {
-   background-color: goldenrod;
-}
 
-body#no_bootstrap .main_column {
-  background-color: var(--light_grayish_yellow);
+footer {
+    background-color: #d9c191;
 }
