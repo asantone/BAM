@@ -99,3 +99,34 @@ footer {
 .tooltip > svg{ margin:auto; display: block; }
 /*---------------------------------------------------------------------*/
 
+/*****************************/
+/*  LINE CHART [via Marcia]  */
+/*****************************/
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #475d74;
+  shape-rendering: crispEdges;
+}
+.axis text {
+  font-size: 11px;
+  fill: #475d74;
+}
+
+.line {
+  fill: none;
+  stroke: #475d74;
+  stroke-width: 7px;
+}
+
+.tooltip-circle {
+  fill: #96AB96;
+  stroke: #173a72;
+  stroke-width: 1px;
+}
+
+.dot {
+  fill: #f4df01;
+}
+
