@@ -88,6 +88,10 @@
 }
 */
 
+body {
+    padding: 0 2rem;   
+}
+
 
 .navbar, footer {
     background-color: #475D74;
