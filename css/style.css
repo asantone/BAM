@@ -88,17 +88,18 @@
 }
 */
 
-body {
-    padding: 0 2rem;   
-}
-
-
 .navbar, footer {
     background-color: #475D74;
 }
 
 h1  {
     padding-top: 3rem;
+}
+
+h2 {
+    color: #639ac3;
+    text-align: center;
+    margin-top: 6rem;
 }
 
 .subhead {
@@ -119,6 +120,11 @@ h1  {
     margin: 2rem auto;
     display: block;
     padding-top: 0;
+}
+
+p {
+    font-size: 1.25em;
+    padding: 0 4rem;
 }
 
 /*--------- Adam's Map ------------------------------------------------*/
