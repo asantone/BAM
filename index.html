@@ -19,6 +19,9 @@
     <!-- this https version doesn't load-->
     <!--<link rel="stylesheet" href="https://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css">-->
     
+    <!--Adam's Top 25 names bar chart -->
+    <link rel="stylesheet" href="css/barChart.css">
+    
 
 </head>
 <body id="no_bootstrap" style="background-color: #F8F8DC;">
@@ -121,6 +124,24 @@
             <!------------------------>
             <!-- end Adam's map row -->
             <!------------------------>
+            
+            <!-------------------->
+            <!-- Adam's bar row -->
+            <!-------------------->
+            <div class="row content row2">
+                <div class="col-sm-12 text-left" style="margin-left: 0;">
+                    <h2 style="color: #639ac3;">Top 25 Dog Names by Percentage</h2>
+                </div><!--end div col-sm-12-->
+                <div class="col-sm-12 text-left" style="margin-left: 0;">
+                    <div id="names" style="border: #d9c191 1px dotted; margin-left: 0; height: 500px;">
+                        <h3>Dog Name Frequency (%)</h3>
+                        <div id="names25" width="100%"></div>
+                    </div>
+                </div><!--end div col-sm-12-->
+            </div><!-- end div row2 content -->
+            <!------------------------>
+            <!-- end Adam's bar row -->
+            <!------------------------>
 
 
 
@@ -165,6 +186,7 @@
 <script src="js/leaflet.js"></script>
 <script src="js/main.js"></script>
 <script src="js/line_chart.js"></script><!-- Marcia's line-chart file. Very messy, currently-->
+<script src="js/names25.js"></script><!--Adam's bar chart for Top 25 dog names -->
 </body>
 </html>
 
