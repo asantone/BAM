@@ -85,7 +85,7 @@ var data;
 
 // Load CSV file
 function loadData() {
-	d3.csv("data/Seattle_Pet_Licenses_Deduped_2015-2018.csv", function(error, csv) {
+	d3.csv("data/Seattle_Pet_Licenses_Deduped_Filtered.csv", function(error, csv) {
 
         csv.forEach(function (d) {
             // Convert string to 'date object'
