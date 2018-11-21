@@ -1,0 +1,89 @@
+
+.hide {
+    display:none;
+}
+
+
+#zip-details {
+    margin-top: 160px;
+}
+
+#choro-title {
+    font-size: 18px;
+    text-align: center;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.form-inline .form-group {
+    margin-bottom: 12px;
+    margin-top: 6px;
+
+}
+
+.form-group {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.form-group label {
+    font-weight: 400;
+    margin-right: 10px;
+}
+
+
+#zip {
+    font-weight: bold;
+    font-size: 30px;
+}
+
+#title {
+    font-size: 18px;
+    text-align: center;
+    margin-top: 3px;
+}
+
+.legend {
+    font-size: 12px;
+}
+
+
+/*********************/
+/*  TOOLTIP OVERLAY  */
+/*********************/
+
+.tooltip-title {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.d3-tip {
+    line-height: 1;
+    padding: 12px;
+    background: rgba(75, 75, 75, 0.8);
+    color: #fff;
+    border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+    box-sizing: border-box;
+    display: inline;
+    font-size: 10px;
+    width: 100%;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.8);
+    content: "\25BC";
+    position: absolute;
+    text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+    margin: -1px 0 0 0;
+    top: 100%;
+    left: 0;
+}
