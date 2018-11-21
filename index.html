@@ -19,6 +19,9 @@
     <!-- this https version doesn't load-->
     <!--<link rel="stylesheet" href="https://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css">-->
     
+    <!--Brittany's choropleth chart -->
+    <link rel="stylesheet" href="css/choropleth.css">
+    
     <!--Adam's Top 25 names bar chart -->
     <link rel="stylesheet" href="css/barChart.css">
     
@@ -103,13 +106,59 @@
                 <div class="col-sm-12 text-left" style="margin-left: 0;">
 
                     <div id="#viz2" style="border: #d9c191 1px dotted; margin-left: 0; height: 500px;">
-                        <h3>Choropleth </h3>
-                        <h4>Placeholder: Tableau choropleth mockup w/ tooltip concept. This map might be used to filter the line graph.</h4>
+                        <!--<h3>Choropleth </h3>-->
+                        <!--<h4>Placeholder: Tableau choropleth mockup w/ tooltip concept. This map might be used to filter the line graph.</h4>-->
                         <!------------ CHOROPLETH GOES HERE ------------>
                         <!------------ CHOROPLETH GOES HERE ------------>
                         <!------------ CHOROPLETH GOES HERE ------------>
-                        <!--<div id="choropleth"></div>-->
-                        <img src="img/choroplethMockup.png" height="400"><!--temporary mockup image-->
+                        <div class="row">
+                            <div class="col-md-7 text-center">
+                                <!-- Select box to choose the data type -->
+                                <form class="form-inline text-center">
+                                    <div class="form-group text-center">
+                                        <label for="data-type">Map Data: </label>
+                                        <select class="form-control text-center" id="data-type">
+                                            <option value="total_all_cnt">All Pets</option>
+                                            <option value="cat_all_cnt">Cats</option>
+                                            <option value="dog_all_cnt">Dogs</option>
+                                        </select>
+                                    </div>
+                                </form>
+                                <div id="choro-title"></div>
+                                <div id="choropleth"></div>
+                            </div>
+                            <div class="col-md-5 my-auto hide" id="zip-details">
+                                <div id="zip"></div>
+                                <table class="table table-striped">
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">Total Pets</th>
+                                        <td id="tot-pets"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Total Cats</th>
+                                        <td id="tot-cats"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Total Dogs</th>
+                                        <td id="tot-dogs"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Population</th>
+                                        <td id="pop"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Median Income</th>
+                                        <td id="income"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Median Age</th>
+                                        <td id="age"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                         <!------------ CHOROPLETH GOES HERE ------------>
                         <!------------ CHOROPLETH GOES HERE ------------>
                         <!------------ CHOROPLETH GOES HERE ------------>
@@ -200,6 +249,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
 <!--<script src="js/bootstrap.min.js"></script>-->
 <script src="js/d3.min.js"></script>
+<script src="js/queue.min.js"></script>
+<script src="js/d3-tip.js"></script>
 <script src="js/leaflet.js"></script> 
 <script src="js/names25.js"></script><!--Adam's bar chart for Top 25 dog names -->
 <script src="js/main.js"></script>
