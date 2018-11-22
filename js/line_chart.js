@@ -5,63 +5,14 @@ var filteredByDateData = data;
 // SVG drawing area
 var margin = {top: 10, right: 30, bottom: 60, left: 40};
 
-var width = 1225 - margin.left - margin.right,
-		height = 300 - margin.top - margin.bottom;
+var width1 = 1225 - margin.left - margin.right,
+		height1 = 300 - margin.top - margin.bottom;
 
-var svg = d3.select("#viz1").append("svg")
-		.attr("width", width + margin.left + margin.right)
-		.attr("height", height + margin.top + margin.bottom)
+var svg1 = d3.select("#viz1").append("svg")
+		.attr("width", width1 + margin.left + margin.right)
+		.attr("height", height1 + margin.top + margin.bottom)
 	    .append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-
-// Date parser
-var formatDate = d3.timeFormat("%Y");
-var parseDate = d3.timeParse("%m/%-d/%y");
-
-// converting to 4-digit years
-var year = formatDate();
-
-// adding commas to numbers
-var format_number = d3.format(",");
-
-// set the ranges
-var xScale =  d3.scaleTime().range([0, width]);
-var yScale = d3.scaleLinear().range([height, 0]);
-
-
-// set up x-axis
-var xAxis = d3.axisBottom()
-    .scale(xScale)
-     .tickSize(16, 0)
-     .tickFormat(d3.timeFormat("%b '%y"));
-
-// set up y-axis
-var yAxis = d3.axisLeft()
-    .scale(yScale);
-
-// prepare x-axis
-svg.append("g")
-    .attr("class", "axis x-axis")
-    .attr("transform", "translate(0," + (height) + ")")
-    .selectAll("text")
-    .style("text-anchor", "end");
-
-// prepare y-axis
-svg.append("g")
-    .attr("class", "axis y-axis")
-    .attr("transform", "translate(" + 0 + ",0)");
-
-
-// prepare the line
-// via https://bl.ocks.org/NGuernse/58e1057b7174fd1717993e3f5913d1a7
-var line = svg.append("g")
-    .attr("d", "line")
-    .attr("fill", "none")
-    .attr("stroke", "#639AC3")
-    .attr("stroke-width", "1")
-    .attr("class", "pathline")
-    .append("path");
 
 
 // prepare the data dots
@@ -85,33 +36,55 @@ var data;
 
 // Load CSV file
 function loadData() {
-	d3.csv("data/Seattle_Pet_Licenses_Deduped_Filtered.csv", function(error, csv) {
+	d3.csv("data/Seattle_Pet_Licenses_Deduped.csv", function(error, csv) {
 
-        csv.forEach(function (d) {
-            // Convert string to 'date object'
-            d.license_issue_date = parseDate(d.license_issue_date);
-        });
+        var parseTime = d3.timeParse( "%m/%d/%Y" );
+        var monthYearFormat = d3.timeFormat("%b %Y");
+        var yearFormat = d3.timeFormat("%Y");
+
+        console.log(parseTime("10/18/2018"));
+        console.log(yearFormat(parseTime("10/18/2018")));
+
+        console.log(parseTime(csv[2].license_issue_date));
 
         // Store csv data in global variable
         data = csv;
 
-        // console.log(data);
+        var filtereddata = data.filter ( function ( d ) {
+            //d.uid == "DogBenjaminBeagle98117"
+            //return d.species == "Dog" && d["license_number"] !== "" || d.species == "Cat" && d["license_number"] !== ""
+            return (d.species == "Dog" || d.species == "Cat")
+                && (yearFormat(parseTime(d.license_issue_date)) == "2015" || yearFormat(parseTime(d.license_issue_date)) == "2016" || yearFormat(parseTime(d.license_issue_date)) == "2017" || yearFormat(parseTime(d.license_issue_date)) == "2018")
+                && d["license_number"] !== ""
+                ; });
+
+        filtereddata.forEach(function (d) {
+            // Convert string to 'date object'
+            d.license_issue_date = parseTime(d.license_issue_date);
+            d.license_issue_date = monthYearFormat(d.license_issue_date);
+        });
+
+        console.log(filtereddata);
+        console.log(data[2].license_issue_date);
 
 
         var countRegByDate = [];
 
-        // Group data by date and count registrations for each day
+        // Group data by date and count registrations for each month
         countRegByDate = d3.nest()
             .key(function (d) {
-                return d.license_issue_date;
+                //formatDate = d3.time.format("%b-%Y");
+                return  d.license_issue_date; //formatDate()
+
             })
             .rollup(function (leaves) {
                 return leaves.length;
             })
-            .entries(data);
+            .entries(filtereddata);
 
-        // console.log("countRegByDate is ");
-        // console.log(countRegByDate);
+
+         console.log("countRegByDate is ");
+         console.log(countRegByDate);
 
         countRegByDate.forEach(function (d) {
             d.key = new Date(d.key);
@@ -124,73 +97,51 @@ function loadData() {
         console.log("countRegByDate is ");
         console.log(countRegByDate);
 
+        // Scales and axes
+        x = d3.scaleTime()
+            .range([0, width1])
+            //.domain(d3.extent(countRegByDate, function(d) { return d.key; }));
+            .domain([new Date(2015, 0, 1), new Date(2018, 10, 1)]);
 
-        // Draw the visualization for the first time
-        // updateVisualization(countRegByDate);
+        y = d3.scaleLinear()
+            .range([height1, 0])
+            .domain([0, d3.max(countRegByDate, function(d) { return d.value; })]);
 
-        // Render visualization
+        xAxis = d3.axisBottom()
+            .scale(x);
 
-        // remove existing path
-        // thanks to the kind folks at
-        // https://stackoverflow.com/questions/21490020/remove-line-from-line-graph-in-d3-js
-        // d3.select("path.line").remove();
+        yAxis = d3.axisLeft()
+            .scale(y);
 
-
-        // establish domains
-       /* xScale.domain([d3.min(countRegByDate, function (d) {
-            return d.key;
-        }),
-            d3.max(countRegByDate, function (d) {
-                return d.key;
-            })]);
-        */
-        xScale.domain([new Date(2015, 0, 1), new Date(2018, 11, 31)])
-
-        // yScale domain
-        yScale.domain([0, d3.max(countRegByDate, function (d) {
-            return d.value;
-        })])
-        ;
-
-        svg.select("g.x-axis")
-            .transition()
-            .duration(800)
-            .ease(d3.easePoly)
+        // Append x-axis
+        svg1.append("g")
+            .attr("class", "x-axis axis")
+            .attr("transform", "translate(0," + height1 + ")")
             .call(xAxis);
 
-        svg.select("g.y-axis")
-            .transition()
-            .duration(800)
-            .ease(d3.easePoly)
-            .call(yAxis)
-            .transition()
-            .duration(800)
-            .ease(d3.easePoly);
+        // Append y-axis
+        svg1.append("g")
+            .attr("class", "y-axis axis")
+            .attr("transform", "translate(0," + 10 + ")")
+            .call(yAxis);
 
 
-        // set up the line
-        // via https://bl.ocks.org/NGuernse/58e1057b7174fd1717993e3f5913d1a7
-        var plotline = d3.line()
-            .x(function (d) {
-                return xScale(d.key);
-            })
-            .y(function (d) {
-                return yScale(+d.value);
-            })
-        //d3.curveMonotoneX(40)
-        ;
+        // SVG area path generator
+        var area = d3.area()
+            .x(function(d) { return x(d.key); })
+            .y0(height1)
+            .y1(function(d) { return y(d.value); });
 
-        // via https://bl.ocks.org/NGuernse/58e1057b7174fd1717993e3f5913d1a7
-        line.datum(countRegByDate)
-            .transition()
-            .duration(1400)
-            .attr("d", plotline)
-            .transition()
-            .duration(2000)
-            //.ease("linear")
-            .attr("style", "opacity: 1");
+        console.log(area);
+
+        // Draw area by using the path generator
+        svg1.append("path")
+            .datum(countRegByDate)
+            .attr("fill", "#ddd")
+            .attr("d", area);
+
 
 
     });
 
-	}; // end loadData function
+	} // end loadData function
