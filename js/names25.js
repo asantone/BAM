@@ -2,108 +2,108 @@
 // Modified from: https://bl.ocks.org/caravinden/eb0e5a2b38c8815919290fa838c6b63b
 
 var data = [
+    // {
+    //     "uniques": "Louie",
+    //     "perc": 0.235
+    // },
+    // {
+    //     "uniques": "Teddy",
+    //     "perc": 0.235
+    // },
+    // {
+    //     "uniques": "Lucky",
+    //     "perc": 0.237
+    // },
+    // {
+    //     "uniques": "Leo",
+    //     "perc": 0.245
+    // },
+    // {
+    //     "uniques": "Ellie",
+    //     "perc": 0.248
+    // },
+    // {
+    //     "uniques": "Zoey",
+    //     "perc": 0.253
+    // },
+    // {
+    //     "uniques": "Kona",
+    //     "perc": 0.254
+    // },
+    // {
+    //     "uniques": "Bear",
+    //     "perc": 0.256
+    // },
+    // {
+    //     "uniques": "Abby",
+    //     "perc": 0.257
+    // },
+    // {
+    //     "uniques": "Winston",
+    //     "perc": 0.257
+    // },
+    // {
+    //     "uniques": "Jake",
+    //     "perc": 0.268
+    // },
+    // {
+    //     "uniques": "Lulu",
+    //     "perc": 0.276
+    // },
+    // {
+    //     "uniques": "Murphy",
+    //     "perc": 0.28
+    // },
+    // {
+    //     "uniques": "Tucker",
+    //     "perc": 0.283
+    // },
+    // {
+    //     "uniques": "Gus",
+    //     "perc": 0.294
+    // },
+    // {
+    //     "uniques": "Oscar",
+    //     "perc": 0.302
+    // },
+    // {
+    //     "uniques": "Ginger",
+    //     "perc": 0.312
+    // },
+    // {
+    //     "uniques": "Gracie",
+    //     "perc": 0.316
+    // },
+    // {
+    //     "uniques": "Milo",
+    //     "perc": 0.321
+    // },
+    // {
+    //     "uniques": "Olive",
+    //     "perc": 0.321
+    // },
+    // {
+    //     "uniques": "Rocky",
+    //     "perc": 0.325
+    // },
+    // {
+    //     "uniques": "Riley",
+    //     "perc": 0.328
+    // },
+    // {
+    //     "uniques": "Toby",
+    //     "perc": 0.336
+    // },
+    // {
+    //     "uniques": "Pepper",
+    //     "perc": 0.336
+    // },
+    // {
+    //     "uniques": "Henry",
+    //     "perc": 0.336
+    // },
     {
-        "uniques": "Louie",
-        "perc": 0.235
-    },
-    {
-        "uniques": "Teddy",
-        "perc": 0.235
-    },
-    {
-        "uniques": "Lucky",
-        "perc": 0.237
-    },
-    {
-        "uniques": "Leo",
-        "perc": 0.245
-    },
-    {
-        "uniques": "Ellie",
-        "perc": 0.248
-    },
-    {
-        "uniques": "Zoey",
-        "perc": 0.253
-    },
-    {
-        "uniques": "Kona",
-        "perc": 0.254
-    },
-    {
-        "uniques": "Bear",
-        "perc": 0.256
-    },
-    {
-        "uniques": "Abby",
-        "perc": 0.257
-    },
-    {
-        "uniques": "Winston",
-        "perc": 0.257
-    },
-    {
-        "uniques": "Jake",
-        "perc": 0.268
-    },
-    {
-        "uniques": "Lulu",
-        "perc": 0.276
-    },
-    {
-        "uniques": "Murphy",
-        "perc": 0.28
-    },
-    {
-        "uniques": "Tucker",
-        "perc": 0.283
-    },
-    {
-        "uniques": "Gus",
-        "perc": 0.294
-    },
-    {
-        "uniques": "Oscar",
-        "perc": 0.302
-    },
-    {
-        "uniques": "Ginger",
-        "perc": 0.312
-    },
-    {
-        "uniques": "Gracie",
-        "perc": 0.316
-    },
-    {
-        "uniques": "Milo",
-        "perc": 0.321
-    },
-    {
-        "uniques": "Olive",
-        "perc": 0.321
-    },
-    {
-        "uniques": "Rocky",
-        "perc": 0.325
-    },
-    {
-        "uniques": "Riley",
-        "perc": 0.328
-    },
-    {
-        "uniques": "Toby",
-        "perc": 0.336
-    },
-    {
-        "uniques": "Pepper",
-        "perc": 0.336
-    },
-    {
-        "uniques": "Henry",
-        "perc": 0.336
-    },
-    {
-        "uniques": "Zoe",
+        "uniques": "Zoe", //25
         "perc": 0.362
     },
     {
@@ -123,7 +123,7 @@ var data = [
         "perc": 0.398
     },
     {
-        "uniques": "Oliver",
+        "uniques": "Oliver", //20
         "perc": 0.413
     },
     {
@@ -143,7 +143,7 @@ var data = [
         "perc": 0.449
     },
     {
-        "uniques": "Sadie",
+        "uniques": "Sadie", //15
         "perc": 0.475
     },
     {
@@ -163,7 +163,7 @@ var data = [
         "perc": 0.51
     },
     {
-        "uniques": "Cooper",
+        "uniques": "Cooper", //10
         "perc": 0.511
     },
     {
@@ -183,7 +183,7 @@ var data = [
         "perc": 0.557
     },
     {
-        "uniques": "Daisy",
+        "uniques": "Daisy", //5
         "perc": 0.606
     },
     {
@@ -210,7 +210,7 @@ data = data.sort(function (a, b) {
 })
 
 // set the dimensions and margins of the graph
-var margin = {top: 10, right: 10, bottom: 25, left: 50},
+var margin = {top: 10, right: 10, bottom: 35, left: 50},
     width = 960 - margin.left - margin.right,
     height = 430 - margin.top - margin.bottom;
 
@@ -232,6 +232,9 @@ var svg = d3.select("#names25").append("svg")
     .attr("transform",
         "translate(" + margin.left + "," + margin.top + ")");
 
+//add tooltip div
+var tt = d3.select("body").append("div").attr("class", "barTT");
+
 // format the data
 data.forEach(function(d) {
     d.perc = +d.perc;
@@ -248,7 +251,23 @@ svg.selectAll(".bar")
     .attr("class", "bar")
     .attr("width", function(d) {return x(d.perc); } )
     .attr("y", function(d) { return y(d.uniques); })
-    .attr("height", y.bandwidth());
+    .attr("height", y.bandwidth())
+    .on("mousemove", function(d){
+    tt
+        .style("left", d3.event.pageX - 50 + "px")
+        .style("top", d3.event.pageY - 70 + "px")
+        .style("display", "inline-block")
+        .html("The name "+(d.uniques)+ " represents " + "<br>" + (d.perc) + "% of the population.");
+})
+    .on("mouseout", function(d){ tt.style("display", "none");});
+
+// text label for the x axis
+svg.append("text")
+    .attr("transform",
+        "translate(" + (width/2) + " ," +
+        (height + margin.top + 20) + ")")
+    .style("text-anchor", "middle")
+    .text("Percent Represented by each Name");
 
 // add the x Axis
 svg.append("g")
