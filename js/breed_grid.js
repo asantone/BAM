@@ -20,7 +20,7 @@ function loadData() {
         // Store csv data in global variable
         csv.forEach(function (d) {
             // Convert string to 'date object'
-            d.license_issue_date = parseDate(d.license_issue_date);
+            d.license_issue_date = parseDate(d.license_issue_date); 
         });
 
         breedData = csv;
