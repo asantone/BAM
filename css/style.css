@@ -164,3 +164,20 @@ p {
   fill: #f4df01;
 }
 
+/*****************************/
+/*  BREED GRID [via Marcia]  */
+/*****************************/
+
+#breed_grid {
+    width: 402px;
+    height: 675px;
+}
+
+.container-fluid {
+    height: auto;
+}
+
+.rowGrid {
+    height: 700px;
+    margin-left: 1rem;
+}
