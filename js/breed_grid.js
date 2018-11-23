@@ -3,6 +3,9 @@
 // User selection = the breed corresponding to image clicked by user
 var selected_breed = "";
 
+// turn provided dates into date objects
+var parseDate = d3.timeParse("%m/%-d/%y");
+
 // Initialize data
 loadData();
 
