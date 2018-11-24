@@ -9,15 +9,16 @@
 }
 
 #choro-title {
-    font-size: 18px;
+    font-size: 20px;
     text-align: center;
     margin-top: 3px;
     margin-bottom: 3px;
+    font-weight: bold;
 }
 
 .form-inline .form-group {
-    margin-bottom: 12px;
-    margin-top: 8px;
+    margin-bottom: 6px;
+    margin-top: 6px;
 
 }
 
@@ -47,6 +48,13 @@
 
 .legend {
     font-size: 12px;
+    shape-rendering: crispEdges;
+}
+
+.legend-title {
+    text-anchor: middle;
+    font-size: 14px;
+    shape-rendering: crispEdges;
 }
 
 
@@ -87,3 +95,4 @@
     top: 100%;
     left: 0;
 }
+
