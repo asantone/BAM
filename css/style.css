@@ -168,9 +168,9 @@ p {
   fill: #f4df01;
 }
 
-/*****************************/
-/*  BREED GRID [via Marcia]  */
-/*****************************/
+/****************************************/
+/*  BREED GRID AND CHARTS [via Marcia]  */
+/****************************************/
 
 #breed_grid {
     width: 502px;
@@ -195,9 +195,15 @@ p.breed_selection {
 }
 
 p.breed_description {
-    color: #475D74;
+    /* color: #475D74;*/
+    color: black;
     font-size: 1.25em;
     padding: 0 2rem 0 1rem;
     margin-top: 2rem;
 }
 
+.breedline {
+    fill: none;
+    stroke: #BB9E64;;
+    stroke-width: 1px;
+}
