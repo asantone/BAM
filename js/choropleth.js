@@ -309,7 +309,8 @@ function updateChoropleth() {
     legend.append("text")
         .attr("class", "legend-title")
         .text(function(){return configs[index].tip;})
-        .attr("transform","translate("+((legend_width/2)+300)+",555)");
+        .attr("transform","translate("+((legend_width/2)+300)+",555)")
+        .attr("text-anchor", "middle");
 
 
     // Map title
