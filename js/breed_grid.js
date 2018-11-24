@@ -120,6 +120,7 @@ function createGrid(data) {
         .on("mouseover", function() {
             d3.select(this)
                 .style("filter", "none")
+                .style("cursor", "pointer")
                 .attr("title", function(d) { return d.key;})
 
         })
@@ -149,28 +150,34 @@ function createGrid(data) {
         function createMiniViz() {
             // SVG drawing area
 
-            var breed_mini_viz = d3.select("#breed_info").append("svg");
+            var miniVizMargin = {top: 60, right: 20, bottom: 20, left: 50};
 
-            var margin = {top: 30, right: 20, bottom: 30, left: 30};
+            var miniVizWidth = 650 - miniVizMargin.left - miniVizMargin.right,
+                miniVizHeight = 260 - miniVizMargin.top - miniVizMargin.bottom;
 
-            var width = 650 - margin.left - margin.right,
-                height = 275 - margin.top - margin.bottom;
 
-            breed_mini_viz
-                .style("border", "1px solid #BB9E64")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
+            // remove existing chart, if present
+            d3.select(".breed_chart").remove();
+
+            // either way, create new chart
+
+            var breed_mini_viz = d3.select("#breed_chart").append("svg")
+                .attr("class", "breed_chart")
+                //.style("border", "1px solid #BB9E64")
+                .attr("width", miniVizWidth + miniVizMargin.left + miniVizMargin.right)
+                .attr("height", miniVizHeight + miniVizMargin.top + miniVizMargin.bottom)
                 .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                .attr("transform", "translate(" + miniVizMargin.left + "," + miniVizMargin.top + ")");
+
 
             // set the ranges
-            var xScale =  d3.scaleTime().range([0, width]);
-            var yScale = d3.scaleLinear().range([height, 20]);
+            var xScale =  d3.scaleTime().range([0, miniVizWidth]);
+            var yScale = d3.scaleLinear().range([miniVizHeight, 0]);
 
             // set up x-axis
             var xAxis = d3.axisBottom()
                 .scale(xScale)
-                .tickSize(16, 0)
+                //.tickSize(16, 0)
                 .tickFormat(d3.timeFormat("%b '%y"));
 
             // set up y-axis
@@ -180,7 +187,7 @@ function createGrid(data) {
             // prepare x-axis
             breed_mini_viz.append("g")
                 .attr("class", "axis x-axis")
-                .attr("transform", "translate(0," + (height) + ")")
+                .attr("transform", "translate(0," + (miniVizHeight) + ")")
                 .selectAll("text")
                 .style("text-anchor", "end");
 
@@ -196,7 +203,7 @@ function createGrid(data) {
                 .attr("fill", "none")
                 .attr("stroke", "#639AC3")
                 .attr("stroke-width", "1")
-                .attr("class", "pathline")
+                .attr("class", "breedline")
                 .append("path");
 
             // get data now, organize stuff better later
@@ -240,25 +247,14 @@ function createGrid(data) {
             // yScale domain
             yScale.domain([d3.min(countByDogBreed, function (d) {
                 return d.value;
-            }), d3.max(countByDogBreed, function (d) {
-                return d.value;
-            })])
+            }), 50])
             ;
 
             breed_mini_viz.select("g.x-axis")
-                .transition()
-                .duration(800)
-                .ease(d3.easePoly)
                 .call(xAxis);
 
             breed_mini_viz.select("g.y-axis")
-                .transition()
-                .duration(800)
-                .ease(d3.easePoly)
-                .call(yAxis)
-                .transition()
-                .duration(800)
-                .ease(d3.easePoly);
+                .call(yAxis);
 
             // set up the line
             // via https://bl.ocks.org/NGuernse/58e1057b7174fd1717993e3f5913d1a7
@@ -281,6 +277,16 @@ function createGrid(data) {
                 .duration(2000)
                 //.ease("linear")
                 .attr("style", "opacity: 1");
+
+            // add title to chart
+            breed_mini_viz.append("text")
+                .attr("x", (miniVizWidth / 2) - 15)
+                .attr("y", 0 - (miniVizMargin.top /3))
+                .attr("text-anchor", "middle")
+                .style("font-size", "14px")
+                .style("font-weight", "bold")
+                .style("fill", "#475D74")
+                .text("Number of " + selected_breed + "s registered per day in Seattle, 2015-2018");
 
 
         } // end function createMiniViz
