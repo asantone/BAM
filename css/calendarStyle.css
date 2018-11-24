@@ -1,0 +1,29 @@
+
+/*this style sheet is for the block calendar view*/
+
+.calDay {
+    fill: #fff;
+    stroke: #ccc;
+}
+
+.calMonth {
+    fill: none;
+    stroke: #000;
+    stroke-width: 1px;
+}
+
+.viridis .q0-10{fill:rgb(68,1,84)}
+.viridis .q1-10{fill:rgb(71,39,117)}
+.viridis .q2-10{fill:rgb(62,72,135)}
+.viridis .q3-10{fill:rgb(49,102,141)}
+.viridis .q4-10{fill:rgb(38,130,141)}
+.viridis .q5-10{fill:rgb(36,157,136)}
+.viridis .q6-10{fill:rgb(55,181,120)}
+.viridis .q7-10{fill:rgb(109,204,88)}
+.viridis .q8-10{fill:rgb(176,221,49)}
+.viridis .q9-10{fill:rgb(253,231,37)}
+
+
+
+
+
