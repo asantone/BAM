@@ -1,12 +1,15 @@
 
-// Format functions
-var formatComma = d3.format(","),
-    formatCurrency = function(d) { return "$" + d3.format(",.2f")(d); };
-
 
 // Initialize data
 var map;
 var pets;
+var neighborhoods;
+
+
+// Filter shelters to those that fall on map
+var shelters = points.filter(function(el) {
+    return el.latlng[1] < -122.24;
+});
 
 
 // --> CREATE SVG DRAWING AREA
@@ -20,7 +23,7 @@ var svg = d3.select("#choropleth").append("svg")
 
 // Set up map
 var projection = d3.geoAlbersUsa()
-    .translate([width*40.9, height*27.3])
+    .translate([width*40.9, height*27.28])
     .scale([80900]);
 
 var path = d3.geoPath()
@@ -41,18 +44,56 @@ var selectID = d3.select("#data-type").property("value");
 
 d3.select("#data-type").on("change", function() {
     selectID = d3.select("#data-type").property("value");
+    // Get configs index for tooltip and map title
     index = configs.findIndex(function(config) {
         return config.key === selectID;
     });
+    // Decide which number format to use in tooltip and legend
+    if (selectID === "cat_all_cnt") {
+        format = formatComma;
+    } else if (selectID === "dog_all_cnt") {
+        format = formatComma;
+    } else if (selectID === "dog_share") {
+        format = formatPercent;
+    } else if (selectID === "dog_mixed_explicit_perc") {
+        format = formatPercent;
+    } else if (selectID === "cat_mixed_explicit_perc") {
+        format = formatPercent;
+    } else if (selectID === "dog_median_size") {
+        format = formatLb;
+    }
     updateChoropleth();
 });
 
 
+// Format functions
+var formatComma = d3.format(","),
+    formatCurrency = function(d) { return "$" + d3.format(",.2f")(d); },
+    formatPercent = d3.format(",.1%"),
+    formatLb = function(d) {
+        return d + " lbs";
+    },
+    format = formatComma;
+
+var formatReal = function(d) {
+    if (isNaN(d)) {
+        return "undefined";
+    } else {
+        return format(d);
+    }
+};
+
+
+
 // Data configurations: data keys, tooltips and map titles
 var configs = [
-    { key: "total_all_cnt", tip: "Number of Pets", title: "Total Number of Pets Per Zip Code in Seattle" },
+    //{ key: "total_all_cnt", tip: "Number of Pets", title: "Total Number of Pets Per Zip Code in Seattle" },
     { key: "cat_all_cnt", tip: "Number of Cats", title: "Total Number of Cats Per Zip Code in Seattle" },
     { key: "dog_all_cnt", tip: "Number of Dogs", title: "Total Number of Dogs Per Zip Code in Seattle" },
+    { key: "dog_share", tip: "Percent Dogs (vs Cats)", title: "Percentage of Dogs (vs Cats) Per Zip Code in Seattle" },
+    { key: "dog_mixed_explicit_perc", tip: "Percent Mixed Breed Dogs", title: "Percentage of Mixed Breed Dogs Per Zip Code in Seattle" },
+    { key: "cat_mixed_explicit_perc", tip: "Percent Mixed Breed Cats", title: "Percentage of Mixed Breed Cats Per Zip Code in Seattle" },
+    { key: "dog_median_size", tip: "Median Dog Weight (lbs)", title: "Median Dog Weight Per Zip Code in Seattle" },
 ];
 var index = configs.findIndex(function(config) {
     return config.key === selectID;
@@ -64,7 +105,7 @@ var index = configs.findIndex(function(config) {
 var tool_tip = d3.tip()
     .attr("class", "d3-tip")
     .offset([-8, 0])
-    .html(function(d) { return "Zip Code: " + d.properties["ZCTA5CE10"] + "<br/>"  + configs[index].tip + ": " + formatComma(d.properties[selectID]) });
+    .html(function(d) { return "Zip Code: " + d.properties["ZCTA5CE10"] + "<br/>"  + configs[index].tip + ": " + formatReal(d.properties[selectID]) });
 
 svg.call(tool_tip);
 
@@ -78,11 +119,15 @@ svg.call(tool_tip);
 // Load data asynchronously
 queue()
     .defer(d3.json,"data/zip-codes.geo.json")
-    .defer(d3.csv,"data/zip_stats_filtered.csv")
+    //.defer(d3.csv,"data/zip_stats_filtered.csv")
+    .defer(d3.csv,"data/Zip_Stats.csv")
     .defer(d3.csv,"data/Census_PopFacts_WA_edit.csv")
+    .defer(d3.csv,"data/seattle_neighborhoods.csv")
     .await(createVis);
 
-function createVis(error, mapJson, petData, demData) {
+
+// Create the map
+function createVis(error, mapJson, petData, demData, hoodData) {
 
     if(error) { console.log(error); }
 
@@ -92,11 +137,13 @@ function createVis(error, mapJson, petData, demData) {
         d.cat_all_cnt =+ d.cat_all_cnt;
         d.dog_all_cnt =+ d.dog_all_cnt;
         d.total_all_cnt =+ d.total_all_cnt;
+        d.dog_share =+ d.dog_share;
+        d.dog_mixed_explicit_perc =+ d.dog_mixed_explicit_perc;
+        d.cat_mixed_explicit_perc =+ d.cat_mixed_explicit_perc;
+        d.dog_median_size =+ d.dog_median_size;
     });
     demData.forEach(function(d){
-        d.Avg_HH_Inc =+ d.Avg_HH_Inc;
         d.Population =+ d.Population;
-        d.Households =+ d.Households;
         d.Med_Age =+ d.Med_Age;
         d.Med_HH_Inc =+ d.Med_HH_Inc;
     });
@@ -107,9 +154,7 @@ function createVis(error, mapJson, petData, demData) {
     for (var i = 0; i < petData.length; i++) {
         for (var j = 0; j < demData.length; j++) {
             if (petData[i].zip_code === demData[j].Area_Code) {
-                petData[i].Avg_HH_Inc = demData[j].Avg_HH_Inc;
                 petData[i].Population = demData[j].Population;
-                petData[i].Households = demData[j].Households;
                 petData[i].Med_Age = demData[j].Med_Age;
                 petData[i].Med_HH_Inc = demData[j].Med_HH_Inc;
             }
@@ -131,9 +176,11 @@ function createVis(error, mapJson, petData, demData) {
                 mapJson.features[j].properties.cat_all_cnt = petData[i].cat_all_cnt;
                 mapJson.features[j].properties.dog_all_cnt = petData[i].dog_all_cnt;
                 mapJson.features[j].properties.total_all_cnt = petData[i].total_all_cnt;
-                mapJson.features[j].properties.Avg_HH_Inc = petData[i].Avg_HH_Inc;
+                mapJson.features[j].properties.dog_share = petData[i].dog_share;
+                mapJson.features[j].properties.dog_mixed_explicit_perc = petData[i].dog_mixed_explicit_perc;
+                mapJson.features[j].properties.cat_mixed_explicit_perc = petData[i].cat_mixed_explicit_perc;
+                mapJson.features[j].properties.dog_median_size = petData[i].dog_median_size;
                 mapJson.features[j].properties.Population = petData[i].Population;
-                mapJson.features[j].properties.Households = petData[i].Households;
                 mapJson.features[j].properties.Med_Age = petData[i].Med_Age;
                 mapJson.features[j].properties.Med_HH_Inc = petData[i].Med_HH_Inc;
                 break;
@@ -145,6 +192,10 @@ function createVis(error, mapJson, petData, demData) {
 
 
     map = mapJson;
+
+
+    neighborhoods = hoodData;
+
 
 
     // Update choropleth
@@ -195,6 +246,27 @@ function updateChoropleth() {
         });
 
 
+    // Add points for shelters
+    svg.selectAll("circle")
+        .data(shelters)
+        .enter()
+        .append("circle")
+        .attr("class", "circle")
+        .attr("cx", function(d) {
+            return projection([d.latlng[1], d.latlng[0]])[0];
+        })
+        .attr("cy", function(d) {
+            return projection([d.latlng[1], d.latlng[0]])[1];
+        })
+        .attr("r", 3)
+        .style("fill", "#fbbb4a")
+        .style("stroke", "#7e5f1e")
+        .style("stroke-width", 0.75)
+        .append("title")
+        .text("Animal Shelter");
+
+
+
     // Remove old legend
     d3.selectAll("g.legend").remove();
 
@@ -221,20 +293,23 @@ function updateChoropleth() {
 
     legend.append('rect')
         .attr("x", function(d) { return d + 300; })
-        .attr("y", height-50)
+        .attr("y", height-70)
         .attr("height", 10)
         .attr("width", sectionWidth)
         .attr('fill', function(d, i) { return colorScaleLin(i)});
 
     legend.append("text")
-        .text(function(){return formatComma(range_low);})
-        .attr("transform","translate(298,546)");
+        .text(function(){return formatReal(range_low);})
+        .attr("transform","translate(300,526)")
+        .attr("text-anchor", "start");
     legend.append("text")
-        .text(function(){return formatComma(range_high);})
-        .attr("transform","translate("+(legend_width+275)+",546)");
+        .text(function(){return formatReal(range_high);})
+        .attr("transform","translate("+(legend_width+300)+",526)")
+        .attr("text-anchor", "end");
     legend.append("text")
+        .attr("class", "legend-title")
         .text(function(){return configs[index].tip;})
-        .attr("transform","translate("+((legend_width/2)+260)+",538)");
+        .attr("transform","translate("+((legend_width/2)+300)+",555)");
 
 
     // Map title
@@ -244,10 +319,20 @@ function updateChoropleth() {
 
 function updateDetails(data) {
 
+    // get current zip for neighborhoods
+    var currentZip = neighborhoods.findIndex(function(hood) {
+        return hood.zip_code === data.properties["ZCTA5CE10"];
+    });
+
+    // show zip code detail table
     $('#zip-details').removeClass('hide');
 
+    // populate table with current zip data
     $("#zip").text(function() {
         return "Zip Code: " + data.properties["ZCTA5CE10"]
+    });
+    $("#neighborhoods").text(function(d) {
+        return neighborhoods[currentZip].neighborhoods;
     });
     $("#tot-pets").text(formatComma(data.properties["total_all_cnt"]));
     $("#tot-cats").text(formatComma(data.properties["cat_all_cnt"]));
