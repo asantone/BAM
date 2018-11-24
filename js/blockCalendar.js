@@ -15,7 +15,7 @@ var color = d3.scaleQuantize()
     .domain([0, 463]) //was -0.05 to 0.05
     .range(d3.range(10).map(function(d) { return "q" + d + "-10"; })); //was 11 not 10 in both places
 
-var svg = d3.select("#calendar").selectAll("svg")
+var svgCal = d3.select("#calendar").selectAll("svg")
     //.data(d3.range(1990, 2011)) //TODO MATCH DATE RANGE
     .data(d3.range(2015, 2019)) //TODO MATCH DATE RANGE
     .enter().append("svg")
@@ -25,12 +25,12 @@ var svg = d3.select("#calendar").selectAll("svg")
     .append("g")
     .attr("transform", "translate(" + ((width - cellSize * 53) / 2) + "," + (height - cellSize * 7 - 1) + ")");
 
-svg.append("text")
+svgCal.append("text")
     .attr("transform", "translate(-6," + cellSize * 3.5 + ")rotate(-90)")
     .style("text-anchor", "middle")
     .text(function(d) { return d; });
 
-var rect = svg.selectAll(".day")
+var rect = svgCal.selectAll(".day")
     .data(function(d) { return d3.timeDays(new Date(d, 0, 1), new Date(d + 1, 0, 1)); })
     .enter().append("rect")
     .attr("class", "day")
@@ -43,7 +43,7 @@ var rect = svg.selectAll(".day")
 rect.append("title")
     .text(function(d) { return d; });
 
-svg.selectAll(".month")
+svgCal.selectAll(".month")
     .data(function(d) { return d3.timeMonths(new Date(d, 0, 1), new Date(d + 1, 0, 1)); })
     .enter().append("path")
     .attr("class", "month")
