@@ -113,24 +113,33 @@
                         <!------------ CHOROPLETH GOES HERE ------------>
                         <div class="row">
                             <div class="col-md-7 text-center">
+                                <div id="choro-title"></div>
                                 <!-- Select box to choose the data type -->
                                 <form class="form-inline text-center">
                                     <div class="form-group text-center">
                                         <label for="data-type">Map Data: </label>
                                         <select class="form-control text-center" id="data-type">
-                                            <option value="total_all_cnt">All Pets</option>
-                                            <option value="cat_all_cnt">Cats</option>
+                                            <!--<option value="total_all_cnt">All Pets</option>-->
                                             <option value="dog_all_cnt">Dogs</option>
+                                            <option value="cat_all_cnt">Cats</option>
+                                            <option value="dog_share">Dogs vs Cats</option>
+                                            <option value="dog_mixed_explicit_perc">Percent Mixed Breed Dogs</option>
+                                            <option value="cat_mixed_explicit_perc">Percent Mixed Breed Cats</option>
+                                            <option value="dog_median_size">Median Dog Weight</option>
                                         </select>
                                     </div>
                                 </form>
-                                <div id="choro-title"></div>
+                                <p style="margin-bottom: 0; font-size: 14px">(Click on a zip code for more details)</p>
                                 <div id="choropleth"></div>
                             </div>
                             <div class="col-md-5 my-auto hide" id="zip-details">
                                 <div id="zip"></div>
                                 <table class="table table-striped">
                                     <tbody>
+                                        <tr>
+                                        <th scope="row">Neighborhoods</th>
+                                        <td id="neighborhoods"></td>
+                                    </tr>
                                     <tr>
                                         <th scope="row">Total Pets</th>
                                         <td id="tot-pets"></td>
