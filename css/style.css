@@ -173,7 +173,7 @@ p {
 /*****************************/
 
 #breed_grid {
-    width: 402px;
+    width: 502px;
     height: 675px;
 }
 
@@ -185,3 +185,19 @@ p {
     height: 700px;
     margin-left: 1rem;
 }
+
+p.breed_selection {
+    color: #776134;
+    font-size: 2em;
+    line-height: 1.25em;
+    padding: 0 2rem 0 1rem;
+    margin-top: 8rem;
+}
+
+p.breed_description {
+    color: #475D74;
+    font-size: 1.25em;
+    padding: 0 2rem 0 1rem;
+    margin-top: 2rem;
+}
+
