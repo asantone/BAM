@@ -3,8 +3,8 @@
 //adapted from https://beta.observablehq.com/@mbostock/d3-calendar-view
 
 var width = 960,
-    height = 136,
-    cellSize = 17; // cell size
+    height = 120,
+    cellSize = 14; // cell size
 
 // var percent = d3.format(".1%"),
 //     format = d3.timeFormat("%Y-%m-%d");    //TODO MATCH DATE FORMAT
