@@ -3,7 +3,7 @@
 // User selection = the breed corresponding to image clicked by user
 var selected_breed = "";
 
-// turn provided dates into date objects
+// turn provided dates to date objects
 var parseDate = d3.timeParse("%m/%-d/%y");
 
 // Initialize data
@@ -20,7 +20,7 @@ function loadData() {
         // Store csv data in global variable
         csv.forEach(function (d) {
             // Convert string to 'date object'
-            d.license_issue_date = parseDate(d.license_issue_date); 
+            d.license_issue_date = parseDate(d.license_issue_date);
         });
 
         breedData = csv;
@@ -95,8 +95,6 @@ function createGrid(data) {
     // https://chartio.com/resources/tutorials/how-to-show-data-on-mouseover-in-d3js/#creating-a-tooltip-using-mouseover-events
 
 
-
-
     // Next up: string manipulation
     // Need function to remove commas and spaces in provided breed names
     // so we can access the correspondingly named image files
@@ -130,14 +128,167 @@ function createGrid(data) {
                 .style("filter", "grayscale(100) opacity(60%)");
         })
         .on("click", function(d, i) {
-            d3.select("#breed_info")
-                .html("If this is working, you have just selected " + d.key + ". <br> This breed is the #" + (i+1) + " -ranked breed based on pet registrations in Seattle, 2015 - 2018.<br>");
+            var index = i;
             selected_breed = d.key;
-            console.log("The selected breed is " + selected_breed + ".");
+            console.log("The selected breed is " + selected_breed + ".")
+            updateDetails(index);
 
         });
+
+    function updateDetails(index) {
+        var ranking = index + 1;
+        console.log("Outside the anonymous function, the selected breed is " + selected_breed + ".");
+        d3.select("#breed_info")
+            .html("<p class='breed_selection'>" + selected_breed + " </p> <p class='breed_description'>" + selected_breed + " is the #" + ranking + " -ranked breed based on pet registrations in Seattle, 2015 - 2018. (More info later.)</p>");
+
+
+
+
+        createMiniViz();
+
+        function createMiniViz() {
+            // SVG drawing area
+
+            var breed_mini_viz = d3.select("#breed_info").append("svg");
+
+            var margin = {top: 30, right: 20, bottom: 30, left: 30};
+
+            var width = 650 - margin.left - margin.right,
+                height = 275 - margin.top - margin.bottom;
+
+            breed_mini_viz
+                .style("border", "1px solid #BB9E64")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            // set the ranges
+            var xScale =  d3.scaleTime().range([0, width]);
+            var yScale = d3.scaleLinear().range([height, 20]);
+
+            // set up x-axis
+            var xAxis = d3.axisBottom()
+                .scale(xScale)
+                .tickSize(16, 0)
+                .tickFormat(d3.timeFormat("%b '%y"));
+
+            // set up y-axis
+            var yAxis = d3.axisLeft()
+                .scale(yScale);
+
+            // prepare x-axis
+            breed_mini_viz.append("g")
+                .attr("class", "axis x-axis")
+                .attr("transform", "translate(0," + (height) + ")")
+                .selectAll("text")
+                .style("text-anchor", "end");
+
+            // prepare y-axis
+            breed_mini_viz.append("g")
+                .attr("class", "axis y-axis")
+                .attr("transform", "translate(" + 0 + ",0)");
+
+            // prepare the line
+            // via https://bl.ocks.org/NGuernse/58e1057b7174fd1717993e3f5913d1a7
+            var line = breed_mini_viz.append("g")
+                .attr("d", "line")
+                .attr("fill", "none")
+                .attr("stroke", "#639AC3")
+                .attr("stroke-width", "1")
+                .attr("class", "pathline")
+                .append("path");
+
+            // get data now, organize stuff better later
+            var dataByDogBreed = [];
+            // Group data by dog breed and count breed numbers for entire period
+
+            console.log("dogBreedData is");
+            console.log(dogBreedData);
+
+            // filter for specific breed
+            var dataByDogBreed = dogBreedData.filter(function(item) {
+                return item.primary_breed == selected_breed;
+            });
+            console.log(dataByDogBreed);
+
+
+            // get number per day (for now, should be by month, perferably)
+            // Group data by date and count registrations for each day
+            countByDogBreed = d3.nest()
+                .key(function (d) {
+                    return d.license_issue_date;
+                })
+                .rollup(function (leaves) {
+                    return leaves.length;
+                })
+                .entries(dataByDogBreed);
+
+            console.log("CountByDogBreed");
+            console.log(countByDogBreed);
+
+           countByDogBreed.forEach(function (d) {
+                d.key = new Date(d.key);
+            });
+
+           countByDogBreed.sort(function (a, b) {
+                return d3.ascending(a.key, b.key);
+            });
+
+            xScale.domain([new Date(2015, 0, 1), new Date(2018, 11, 31)]);
+
+            // yScale domain
+            yScale.domain([d3.min(countByDogBreed, function (d) {
+                return d.value;
+            }), d3.max(countByDogBreed, function (d) {
+                return d.value;
+            })])
+            ;
+
+            breed_mini_viz.select("g.x-axis")
+                .transition()
+                .duration(800)
+                .ease(d3.easePoly)
+                .call(xAxis);
+
+            breed_mini_viz.select("g.y-axis")
+                .transition()
+                .duration(800)
+                .ease(d3.easePoly)
+                .call(yAxis)
+                .transition()
+                .duration(800)
+                .ease(d3.easePoly);
+
+            // set up the line
+            // via https://bl.ocks.org/NGuernse/58e1057b7174fd1717993e3f5913d1a7
+            var plotline = d3.line()
+                    .x(function (d) {
+                        return xScale(d.key);
+                    })
+                    .y(function (d) {
+                        return yScale(+d.value);
+                    })
+                //d3.curveMonotoneX(40)
+            ;
+
+            // via https://bl.ocks.org/NGuernse/58e1057b7174fd1717993e3f5913d1a7
+            line.datum(countByDogBreed)
+                .transition()
+                .duration(1400)
+                .attr("d", plotline)
+                .transition()
+                .duration(2000)
+                //.ease("linear")
+                .attr("style", "opacity: 1");
+
+
+        } // end function createMiniViz
+
+    } // end function update Details
+
+
+
 // see https://stackoverflow.com/questions/10608964/how-to-share-scope-between-functions-in-d3-js
 
 } // end function createGraph()
-
-console.log("Outside the d3 function, the selected breed is " + selected_breed + ".");
