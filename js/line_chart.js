@@ -301,7 +301,7 @@ function loadData() {
             .attr ( "cx" , function ( d ) { return x(d.key) })
             .attr ( "cy" , function ( d ) { return y(d.value)})
             .attr ( "r" , 8 )
-            .style ( "fill" , "dd1c77" )
+            .style ( "fill" , "dd1c77" )// 43a2ca
             .style ( "stroke" , "white" )
             .style ( "stroke-width" , 2)
             .style ( "opacity" , 0.9 );
