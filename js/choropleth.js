@@ -293,7 +293,7 @@ function updateChoropleth() {
 
     legend.append('rect')
         .attr("x", function(d) { return d + 300; })
-        .attr("y", height-70)
+        .attr("y", 530)
         .attr("height", 10)
         .attr("width", sectionWidth)
         .attr('fill', function(d, i) { return colorScaleLin(i)});
