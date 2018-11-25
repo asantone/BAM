@@ -192,27 +192,23 @@
             <!------------------------------->
             
             
-            
+            <!------------ CHOROPLETH ------------>
             <div class="row content row2">
-                <div class="col-sm-12 text-left" style="margin-left: 0;">
+                <div class="col-sm-10 text-left">
                     <p id="anchor_registrations_by_area">&nbsp;</p>
-                     <h2 style="color: #639ac3;">Do Seattle residents living within certain zip codes tend to own more pets or choose different breeds than other residents?</h2>
-                    <p>The number of cats, for example, that residents own is correlated with location. Residents from areas north of downtown Seattle have a median share of cats of 36%, while residents south of downtown have a median share of 29%. <em>&lt;we need to sound less statician-y throughout our narrative!&gt;</em> </p>
-                    
-
-                    </p>
-
-                </div><!--end div col-sm-12-->
+                     <h6 style="color: #639ac3;">Where are all of these pets living and which pets are the most popular?</h6>
+                    <p style="font-size: 1.25em; padding: 0 4rem;">Dogs are still man’s best friend in Seattle with dogs having a larger share of the pet population.
+                        Since our furry friends can be expensive, zip codes with a higher median yearly income tend to
+                        have more pets.</p>
+                    <p style="font-size: 1.25em; padding: 0 4rem;">Explore the map below to see where different pets are living in the Seattle area in 2018. Animal
+                        shelters are marked with a yellow point on the map.</p> 
+                </div>
 
 
                 <div class="col-sm-12 text-left" style="margin-left: 0;">
 
                     <div id="#viz2" style="margin-left: 0; height: 680px;">
-                        <!--<h3>Choropleth </h3>-->
-                        <!--<h4>Placeholder: Tableau choropleth mockup w/ tooltip concept. This map might be used to filter the line graph.</h4>-->
-                        <!------------ CHOROPLETH GOES HERE ------------>
-                        <!------------ CHOROPLETH GOES HERE ------------>
-                        <!------------ CHOROPLETH GOES HERE ------------>
+               
                         <div class="row">
                             <div class="col-md-7 text-center">
                                 <div id="choro-title"></div>
@@ -234,50 +230,84 @@
                                 <p style="margin-bottom: 0; font-size: 14px">(Click on a zip code for more details)</p>
                                 <div id="choropleth"></div>
                             </div>
-                            <div class="col-md-5 my-auto hide" id="zip-details">
-                                <div id="zip"></div>
-                                <table class="table table-striped">
-                                    <tbody>
+                            
+                            <div class="col-md-4">
+                                <br>
+                                <div class="row" id="map-blurb">
+                                    <p id="dog_all">There are over 47,000 dogs licensed in Seattle, due in part to the city's
+                                        efforts to have pets adopted and licensed. Many of the dogs are living in the higher
+                                        income zip codes of northern Seattle.</p>
+                                    <p id="cat_all" class="hide">Cats are concentrated in northern
+                                        Seattle zip codes, with many living the the higher income areas.</p>
+                                    <p id="dog_v_cat" class="hide">Dogs are the pet of choice, with all zip codes having
+                                        at least 60% more dogs than cats. Dogs tend to be even more popular in areas in
+                                        southern Seattle.</p>
+                                    <p id="dog_mixed" class="hide">The successful adoption campaigns led to an increase in
+                                        licenses for mixed-breed dogs. In September, the share of adopted mixed-breed dogs
+                                        jumped significantly over July, increasing from 14% to 25% respectively.</p>
+                                    <p id="cat_mixed" class="hide">The share of mixed-breed cats adopted in September also
+                                        jumped significantly over June of that same year, increasing from 27% to 40%,
+                                        respectively.</p>
+                                    <p id="dog_size" class="hide">Most of the smaller dogs (under 20 lb.) live in the areas
+                                        around downtown Seattle, while larger dogs are concentrated in the more suburban
+                                        zip codes.</p>
+                                </div>
+                                <div class="row" id="zip-details">
+                                    <div id="zip">Greater Seattle Area</div>
+                                    <table class="table table-striped">
+                                        <tbody>
                                         <tr>
-                                        <th scope="row">Neighborhoods</th>
-                                        <td id="neighborhoods"></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Total Pets</th>
-                                        <td id="tot-pets"></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Total Cats</th>
-                                        <td id="tot-cats"></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Total Dogs</th>
-                                        <td id="tot-dogs"></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Population</th>
-                                        <td id="pop"></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Median Income</th>
-                                        <td id="income"></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Median Age</th>
-                                        <td id="age"></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                            <th scope="row">Neighborhoods</th>
+                                            <td id="neighborhoods">All</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">All Licensed Pets</th>
+                                            <td id="tot-pets">71,296</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Total Dogs</th>
+                                            <td id="tot-dogs">47,388</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Percent Mixed-Breed Dogs</th>
+                                            <td id="mix-dogs">14.3%</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Median Dog Weight</th>
+                                            <td id="dog-weight">38 lb</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Total Cats</th>
+                                            <td id="tot-cats">23,908</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Percent Mixed-Breed Cats</th>
+                                            <td id="mix-cats">22.1%</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Population</th>
+                                            <td id="pop">849,544</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Median Income</th>
+                                            <td id="income">$84,262</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Median Age</th>
+                                            <td id="age">39.4</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                        <!------------ CHOROPLETH GOES HERE ------------>
-                        <!------------ CHOROPLETH GOES HERE ------------>
-                        <!------------ CHOROPLETH GOES HERE ------------>
                     </div>
 
                 </div><!--end div col-sm-12-->
 
             </div><!-- end div row2 content -->
+            <!------------ CHOROPLETH ------------>
+      
 
             <!--map was here, moved to end-->
             
