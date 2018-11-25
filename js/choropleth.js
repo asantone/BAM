@@ -62,16 +62,17 @@ d3.select("#data-type").on("change", function() {
     } else if (selectID === "dog_median_size") {
         format = formatLb;
     }
+    updateBlurb();
     updateChoropleth();
 });
 
 
 // Format functions
 var formatComma = d3.format(","),
-    formatCurrency = function(d) { return "$" + d3.format(",.2f")(d); },
+    formatCurrency = function(d) { return "$" + d3.format(",.0f")(d); },
     formatPercent = d3.format(",.1%"),
     formatLb = function(d) {
-        return d + " lbs";
+        return d + " lb";
     },
     format = formatComma;
 
@@ -88,12 +89,12 @@ var formatReal = function(d) {
 // Data configurations: data keys, tooltips and map titles
 var configs = [
     //{ key: "total_all_cnt", tip: "Number of Pets", title: "Total Number of Pets Per Zip Code in Seattle" },
-    { key: "cat_all_cnt", tip: "Number of Cats", title: "Total Number of Cats Per Zip Code in Seattle" },
-    { key: "dog_all_cnt", tip: "Number of Dogs", title: "Total Number of Dogs Per Zip Code in Seattle" },
+    { key: "cat_all_cnt", tip: "Number of Cats", title: "Total Number of Cats Licensed Per Zip Code in Seattle" },
+    { key: "dog_all_cnt", tip: "Number of Dogs", title: "Total Number of Dogs Licensed Per Zip Code in Seattle" },
     { key: "dog_share", tip: "Percent Dogs (vs Cats)", title: "Percentage of Dogs (vs Cats) Per Zip Code in Seattle" },
     { key: "dog_mixed_explicit_perc", tip: "Percent Mixed Breed Dogs", title: "Percentage of Mixed Breed Dogs Per Zip Code in Seattle" },
     { key: "cat_mixed_explicit_perc", tip: "Percent Mixed Breed Cats", title: "Percentage of Mixed Breed Cats Per Zip Code in Seattle" },
-    { key: "dog_median_size", tip: "Median Dog Weight (lbs)", title: "Median Dog Weight Per Zip Code in Seattle" },
+    { key: "dog_median_size", tip: "Median Dog Weight (lb)", title: "Median Dog Weight Per Zip Code in Seattle" },
 ];
 var index = configs.findIndex(function(config) {
     return config.key === selectID;
@@ -259,8 +260,8 @@ function updateChoropleth() {
             return projection([d.latlng[1], d.latlng[0]])[1];
         })
         .attr("r", 3)
-        .style("fill", "#fbbb4a")
-        .style("stroke", "#7e5f1e")
+        .style("fill", "#fae655")
+        .style("stroke", "#000000")
         .style("stroke-width", 0.75)
         .append("title")
         .text("Animal Shelter");
@@ -326,7 +327,7 @@ function updateDetails(data) {
     });
 
     // show zip code detail table
-    $('#zip-details').removeClass('hide');
+    //$('#zip-details').removeClass('hide');
 
     // populate table with current zip data
     $("#zip").text(function() {
@@ -338,9 +339,60 @@ function updateDetails(data) {
     $("#tot-pets").text(formatComma(data.properties["total_all_cnt"]));
     $("#tot-cats").text(formatComma(data.properties["cat_all_cnt"]));
     $("#tot-dogs").text(formatComma(data.properties["dog_all_cnt"]));
+    $("#mix-dogs").text(formatPercent(data.properties["dog_mixed_explicit_perc"]));
+    $("#dog-weight").text(formatLb(data.properties["dog_median_size"]));
+    $("#mix-cats").text(formatPercent(data.properties["cat_mixed_explicit_perc"]));
     $("#pop").text(formatComma(data.properties["Population"]));
     $("#income").text(formatCurrency(data.properties["Med_HH_Inc"]));
     $("#age").text(data.properties["Med_Age"]);
+
+}
+
+function updateBlurb() {
+
+    if (selectID === "cat_all_cnt") {
+        $('#dog_all').addClass('hide');
+        $('#dog_v_cat').addClass('hide');
+        $('#dog_mixed').addClass('hide');
+        $('#cat_mixed').addClass('hide');
+        $('#dog_size').addClass('hide');
+        $('#cat_all').removeClass('hide');
+    } else if (selectID === "dog_share") {
+        $('#dog_all').addClass('hide');
+        $('#cat_all').addClass('hide');
+        $('#dog_mixed').addClass('hide');
+        $('#cat_mixed').addClass('hide');
+        $('#dog_size').addClass('hide');
+        $('#dog_v_cat').removeClass('hide');
+    } else if (selectID === "dog_mixed_explicit_perc") {
+        $('#dog_all').addClass('hide');
+        $('#cat_all').addClass('hide');
+        $('#dog_v_cat').addClass('hide');
+        $('#cat_mixed').addClass('hide');
+        $('#dog_size').addClass('hide');
+        $('#dog_mixed').removeClass('hide');
+    } else if (selectID === "cat_mixed_explicit_perc") {
+        $('#dog_all').addClass('hide');
+        $('#cat_all').addClass('hide');
+        $('#dog_v_cat').addClass('hide');
+        $('#dog_mixed').addClass('hide');
+        $('#dog_size').addClass('hide');
+        $('#cat_mixed').removeClass('hide');
+    } else if (selectID === "dog_median_size") {
+        $('#dog_all').addClass('hide');
+        $('#cat_all').addClass('hide');
+        $('#dog_v_cat').addClass('hide');
+        $('#dog_mixed').addClass('hide');
+        $('#cat_mixed').addClass('hide');
+        $('#dog_size').removeClass('hide');
+    } else if (selectID === "dog_all_cnt") {
+        $('#dog_size').addClass('hide');
+        $('#cat_all').addClass('hide');
+        $('#dog_v_cat').addClass('hide');
+        $('#dog_mixed').addClass('hide');
+        $('#cat_mixed').addClass('hide');
+        $('#dog_all').removeClass('hide');
+    }
 
 }
 
