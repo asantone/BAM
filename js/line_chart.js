@@ -5,7 +5,7 @@ var filteredByDateData = data;
 // SVG drawing area
 var margin = {top: 40, right: 30, bottom: 40, left: 90};
 
-var width1 = 800 - margin.left - margin.right,
+var width1 = 750 - margin.left - margin.right,
 		height1 = 450 - margin.top - margin.bottom;
 
 var svg1 = d3.select("#viz1").append("svg")
