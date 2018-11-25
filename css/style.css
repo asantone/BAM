@@ -385,3 +385,12 @@ p.breed_description {
     stroke: #BB9E64;;
     stroke-width: 1px;
 }
+
+.viz_axis {
+    stroke: #475D74;
+}
+
+.viz_axis text {
+    fill: #475D74;
+    font-weight: normal;
+}
