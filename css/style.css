@@ -142,6 +142,7 @@ h7 {
     font-size: 18px;
     margin: auto;
     font-weight: bold;
+    text-align: center;
 
 }
 
@@ -190,10 +191,6 @@ a:active {
     color: #475D74;
 }
 
-.fa
-{
-    margin-bottom: 20px;
-}
 
 p {
     font-size: 1.25em;
@@ -209,9 +206,9 @@ ps {
 .col-sm-2
 {
     text-align: center;
-    padding-top: 20px;
-    padding-left: 80px;
-    padding-right: 80px;
+    padding-top: 60px;
+    padding-left: 70px;
+    padding-right: 70px;
 
 }
 
@@ -220,6 +217,11 @@ ps {
     text-align: left;
     margin: auto;
     padding-right: 80px;
+}
+
+.fa
+{
+    margin-bottom: 10px;
 }
 
 #img-foundation {
@@ -317,26 +319,26 @@ ps {
 }
 
 #top {
-    transform: translate(-50%, -50%);
-    font-size: 50px;
-    line-height: 50px;
+    transform: translate(-50%, -20%);
+    font-size: 48px;
+    line-height: 48px;
     font-weight: 600;
     color: rgba(255,255,255,1);
 }
 
 #bottom {
-    transform: translate(-50%, 70%);
-    font-size: 26px;
+    transform: translate(-50%, 90%);
+    font-size: 22px;
     line-height: 50px;
     font-weight: 200;
     color: rgba(255,255,255,1);
 }
 
 #button {
-    transform: translate(-50%, 250%);
+    transform: translate(-50%, 200%);
     padding-left: 1em;
     padding-right: 1em;
-    font-size: 22px;
+    font-size: 20px;
     line-height: 50px;
     font-weight: 200;
     color: rgba(255,255,255,1);
