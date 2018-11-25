@@ -186,16 +186,17 @@ function createGrid(data) {
 
             // prepare x-axis
             breed_mini_viz.append("g")
-                .attr("class", "axis x-axis")
+                .attr("class", "viz_axis x-axis")
                 .attr("transform", "translate(0," + (miniVizHeight) + ")")
                 .selectAll("text")
                 .style("text-anchor", "end");
 
             // prepare y-axis
             breed_mini_viz.append("g")
-                .attr("class", "axis y-axis")
+                .attr("class", "viz_axis y-axis")
                 .attr("transform", "translate(" + 0 + ",0)");
-
+            
+            
             // prepare the line
             // via https://bl.ocks.org/NGuernse/58e1057b7174fd1717993e3f5913d1a7
             var line = breed_mini_viz.append("g")
