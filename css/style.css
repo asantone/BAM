@@ -92,6 +92,15 @@
     background-color: #475D74;
 }
 
+ul.nav.navbar-nav li a {
+     color: #FCFCF3;
+ }
+
+ul.nav.navbar-nav li a:hover {
+    color: #639AC3;
+    font-weight: normal;
+}
+
 h1  {
     padding-top: 3rem;
 }
