@@ -4,7 +4,11 @@
 var selected_breed = "";
 
 // turn provided dates to date objects
+// of one form or another
 var parseDate = d3.timeParse("%m/%-d/%y");
+// from Javier's code
+var monthYearFormat = d3.timeFormat("%b %Y");
+var  yearFormat = d3.timeFormat("%Y");
 
 // Initialize data
 loadData();
@@ -20,7 +24,7 @@ function loadData() {
         // Store csv data in global variable
         csv.forEach(function (d) {
             // Convert string to 'date object'
-            d.license_issue_date = parseDate(d.license_issue_date);
+            // d.license_issue_date = parseDate(d.license_issue_date);
         });
 
         breedData = csv;
@@ -32,11 +36,28 @@ function loadData() {
         // });
 
         dogBreedData = breedData.filter(function(item) {
-            return item.species == "Dog";
+            return (item.species == "Dog");
         });
 
         // console.log("dogBreedData is");
         // console.log(dogBreedData);
+
+        // filter data by date
+
+        var filteredBreedData = dogBreedData.filter (function(d) {
+            return    (yearFormat(parseDate(d.license_issue_date)) == "2015"
+                    || yearFormat(parseDate(d.license_issue_date)) == "2016"
+                    || yearFormat(parseDate(d.license_issue_date)) == "2017"
+                    || yearFormat(parseDate(d.license_issue_date)) == "2018"
+        )});
+        // console.log("filteredBreedData is");
+        // console.log(filteredBreedData);
+
+        filteredBreedData.forEach(function(d) {
+            // convert string to date object
+            d.license_issue_date = parseDate(d.license_issue_date);
+            d.license_issue_date = monthYearFormat(d.license_issue_date);
+        })
 
         var countByDogBreed = [];
         // Group data by dog breed and count breed numbers for entire period
@@ -131,28 +152,34 @@ function createGrid(data) {
         .on("click", function(d, i) {
             var index = i;
             selected_breed = d.key;
-            console.log("The selected breed is " + selected_breed + ".")
+            // console.log("The selected breed is " + selected_breed + ".");
             updateDetails(index);
 
         });
 
     function updateDetails(index) {
         var ranking = index + 1;
-        console.log("Outside the anonymous function, the selected breed is " + selected_breed + ".");
+
+        var photo_url = "img/cropped_images/" + removeCommasAndSpaces(selected_breed) + ".jpg";
+        var ranking_line = "</p><p class='ranking'>&nbsp; #" + ranking + " most popular breed in Seattle</p>";
+
+        // console.log("photo is at " + photo_url);
+
+        // console.log("Outside the anonymous function, the selected breed is " + selected_breed + ".");
         d3.select("#breed_info")
-            .html("<p class='breed_selection'>" + selected_breed + " </p> <p class='breed_description'>" + selected_breed + " is the #" + ranking + " -ranked breed based on pet registrations in Seattle, 2015 - 2018. (More info later.)</p>");
+            .html("<p class='breed_selection'>" + breed_info[selected_breed].primary_breed  + ranking_line +" </p> <p class='breed_description'><img class='doggie' src='"+ photo_url + "'>" + breed_info[selected_breed].description + "</p>");
 
-
-
+        /*d3.select("#breed_description")
+            .html("<p>" + breed_descriptions[selected_breed].descripton + "</p>");*/
 
         createMiniViz();
 
         function createMiniViz() {
             // SVG drawing area
 
-            var miniVizMargin = {top: 60, right: 20, bottom: 20, left: 50};
+            var miniVizMargin = {top: 70, right: 20, bottom: 20, left: 50};
 
-            var miniVizWidth = 650 - miniVizMargin.left - miniVizMargin.right,
+            var miniVizWidth = 750 - miniVizMargin.left - miniVizMargin.right,
                 miniVizHeight = 260 - miniVizMargin.top - miniVizMargin.bottom;
 
 
@@ -195,8 +222,7 @@ function createGrid(data) {
             breed_mini_viz.append("g")
                 .attr("class", "viz_axis y-axis")
                 .attr("transform", "translate(" + 0 + ",0)");
-            
-            
+
             // prepare the line
             // via https://bl.ocks.org/NGuernse/58e1057b7174fd1717993e3f5913d1a7
             var line = breed_mini_viz.append("g")
@@ -211,18 +237,17 @@ function createGrid(data) {
             var dataByDogBreed = [];
             // Group data by dog breed and count breed numbers for entire period
 
-            console.log("dogBreedData is");
-            console.log(dogBreedData);
+            // console.log("dogBreedData is");
+            // console.log(dogBreedData);
 
             // filter for specific breed
             var dataByDogBreed = dogBreedData.filter(function(item) {
                 return item.primary_breed == selected_breed;
             });
-            console.log(dataByDogBreed);
+            // console.log(dataByDogBreed);
 
 
-            // get number per day (for now, should be by month, perferably)
-            // Group data by date and count registrations for each day
+            // Group data by date (month) and count registrations for each month
             countByDogBreed = d3.nest()
                 .key(function (d) {
                     return d.license_issue_date;
@@ -232,8 +257,8 @@ function createGrid(data) {
                 })
                 .entries(dataByDogBreed);
 
-            console.log("CountByDogBreed");
-            console.log(countByDogBreed);
+            // console.log("CountByDogBreed");
+            // console.log(countByDogBreed);
 
            countByDogBreed.forEach(function (d) {
                 d.key = new Date(d.key);
@@ -248,7 +273,9 @@ function createGrid(data) {
             // yScale domain
             yScale.domain([d3.min(countByDogBreed, function (d) {
                 return d.value;
-            }), 50])
+            }), d3.max(countByDogBreed, function (d) {
+                return d.value;
+            })])
             ;
 
             breed_mini_viz.select("g.x-axis")
@@ -266,7 +293,7 @@ function createGrid(data) {
                     .y(function (d) {
                         return yScale(+d.value);
                     })
-                //d3.curveMonotoneX(40)
+                .curve(d3.curveNatural)
             ;
 
             // via https://bl.ocks.org/NGuernse/58e1057b7174fd1717993e3f5913d1a7
@@ -281,16 +308,17 @@ function createGrid(data) {
 
             // add title to chart
             breed_mini_viz.append("text")
-                .attr("x", (miniVizWidth / 2) - 15)
-                .attr("y", 0 - (miniVizMargin.top /3))
-                .attr("text-anchor", "middle")
-                .style("font-size", "14px")
+                .attr("x", 2)
+                .attr("y", 0 - (miniVizMargin.top /2))
+                .attr("text-anchor", "start")
+                .style("font-size", "15px")
                 .style("font-weight", "bold")
                 .style("fill", "#475D74")
-                .text("Number of " + selected_breed + "s registered per day in Seattle, 2015-2018");
+                .text("Number of " + selected_breed + "s registered per month in Seattle, 2015-2018");
 
 
         } // end function createMiniViz
+        d3.select("#description_source").html("<p class='description_source'>testing. Source of the breed description text will go here. Photo credits will go in the footer.</p>");
 
     } // end function update Details
 
