@@ -360,9 +360,11 @@ ps {
 /****************************************/
 
 #breed_grid {
-    width: 502px;
-    height: 675px;
+    width: 400px;
+    height: 518px;
+    background-color: #A5C0DB;
 }
+
 
 .container-fluid {
     height: auto;
@@ -371,14 +373,39 @@ ps {
 .rowGrid {
     height: 700px;
     margin-left: 1rem;
+
+}
+
+.grid_column {
+    padding-right: 0;
+    margin-bottom: 4rem;
+}
+
+.grid_description {
+    width: 800px;
+}
+
+h3.top_breed_title {
+    padding: 1.5rem 0;
+    margin: 0;
+}
+
+div#breed_info {
+    width: 800px;
+    height: 210px;
 }
 
 p.breed_selection {
     color: #776134;
-    font-size: 2em;
+    font-size: 2.25em;
     line-height: 1.25em;
     padding: 0 2rem 0 1rem;
-    margin-top: 8rem;
+    margin-top: 5rem;
+}
+
+p.ranking {
+    color: #776134;
+    font-size: 1.5em;
 }
 
 p.breed_description {
@@ -386,13 +413,26 @@ p.breed_description {
     color: black;
     font-size: 1.25em;
     padding: 0 2rem 0 1rem;
-    margin-top: 2rem;
+    margin-top: 0rem;
+}
+
+p.description_source {
+    margin-top: 1.5rem;
+    font-style: italic;
+    font-size: 1rem;
+}
+
+
+
+img.doggie {
+    float: left;
+    margin-right: 1rem;
 }
 
 .breedline {
     fill: none;
-    stroke: #BB9E64;;
-    stroke-width: 1px;
+    stroke: #A5C0DB;
+    stroke-width: 2px;
 }
 
 .viz_axis {
