@@ -379,6 +379,7 @@ ps {
 .grid_column {
     padding-right: 0;
     margin-bottom: 4rem;
+    padding-left: 2.75rem;
 }
 
 .grid_description {
@@ -393,6 +394,15 @@ h3.top_breed_title {
 div#breed_info {
     width: 800px;
     height: 210px;
+    padding-left: 2rem;
+}
+
+p.breed_selection_initial {
+    color: #776134;
+    font-size: 1.25em;
+    line-height: 1.25em;
+    padding: 0 2rem 0 1rem;
+    margin-top: 5rem;
 }
 
 p.breed_selection {
@@ -417,12 +427,16 @@ p.breed_description {
 }
 
 p.description_source {
-    margin-top: 1.5rem;
+    margin-top: 1.4rem;
     font-style: italic;
     font-size: 1rem;
+    padding-left: 2.5rem;
 }
 
-
+p.description_source a {
+    color: black;
+    font-size: inherit;
+}
 
 img.doggie {
     float: left;
