@@ -177,10 +177,10 @@ function createGrid(data) {
         function createMiniViz() {
             // SVG drawing area
 
-            var miniVizMargin = {top: 70, right: 20, bottom: 20, left: 50};
+            var miniVizMargin = {top: 70, right: 20, bottom: 20, left: 55};
 
             var miniVizWidth = 750 - miniVizMargin.left - miniVizMargin.right,
-                miniVizHeight = 260 - miniVizMargin.top - miniVizMargin.bottom;
+                miniVizHeight = 270 - miniVizMargin.top - miniVizMargin.bottom;
 
 
             // remove existing chart, if present
@@ -272,9 +272,9 @@ function createGrid(data) {
 
             // yScale domain
             yScale.domain([d3.min(countByDogBreed, function (d) {
-                return d.value;
+                return d.value - 2;
             }), d3.max(countByDogBreed, function (d) {
-                return d.value;
+                return d.value + 3;
             })])
             ;
 
@@ -282,6 +282,8 @@ function createGrid(data) {
                 .call(xAxis);
 
             breed_mini_viz.select("g.y-axis")
+                .transition()
+                .duration(500)
                 .call(yAxis);
 
             // set up the line
@@ -298,27 +300,29 @@ function createGrid(data) {
 
             // via https://bl.ocks.org/NGuernse/58e1057b7174fd1717993e3f5913d1a7
             line.datum(countByDogBreed)
-                .transition()
-                .duration(1400)
                 .attr("d", plotline)
+                .attr("style", "opacity: .3")
                 .transition()
-                .duration(2000)
+                .duration(500)
                 //.ease("linear")
                 .attr("style", "opacity: 1");
 
             // add title to chart
             breed_mini_viz.append("text")
-                .attr("x", 2)
-                .attr("y", 0 - (miniVizMargin.top /2))
+                .attr("x", 0 - (miniVizMargin.left /2))
+                .attr("y", 0 - (miniVizMargin.top /3.25))
                 .attr("text-anchor", "start")
                 .style("font-size", "15px")
                 .style("font-weight", "bold")
-                .style("fill", "#475D74")
-                .text("Number of " + selected_breed + "s registered per month in Seattle, 2015-2018");
+                .style("fill", "#776134")
+                .text("Number of " + selected_breed + "s registered per month in Seattle, 1/2015 to 10/2018");
 
 
         } // end function createMiniViz
-        d3.select("#description_source").html("<p class='description_source'>testing. Source of the breed description text will go here. Photo credits will go in the footer.</p>");
+        d3.select("#description_source").html("<p class='description_source'>Breed description taken wholly or mostly verbatim from " + breed_info[selected_breed].source_url + ".<br>Photo: "+ breed_info[selected_breed].photo_credit) + ".</p>";
+
+
+
 
     } // end function update Details
 
