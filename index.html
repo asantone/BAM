@@ -335,20 +335,27 @@
 
 
 
-            <div class="row rowGrid">
-                <div class="col-sm-12 text-left">
-                 <p id="anchor_dog_breeds">&nbsp;</p>
-                 <p style="margin-top: 6rem;">Can you identify the 20 most popular dog breeds in Seattle?</p>
+            <!------------------------------->
+            <!-- Marcia's breed-grid row ---->
+            <!------------------------------->
 
+            <div class="row rowGrid">
+                <p id="anchor_dog_breeds">&nbsp;</p>
+
+
+                <div class="col-sm-12 text-left" style="margin-left: 0;">
+                    <h2>Can you identify the 20 most popular dog breeds in Seattle?</h2>
 
                 </div><!--end div col-sm-12-->
+                </div>
 
+                <div class="col-sm-1 text-left grid_column" style="margin-left: 0;"></div>
 
-                <div class="col-sm-5 text-left" style="margin-left: 0;">
+                <div class="col-sm-3 text-left grid_column" style="margin-left: 0;">
+                    <h3 class="top_breed_title">The Top 20 Dog Breeds of Seattle</h3>
 
                     <div id="#viz3">
-                        <h3>The Top 20 Dog Breeds of Seattle</h3>
-                        <p style="margin-bottom: 0; font-size: 14px; margin-left: 4rem;">(Click on a photo for more details on the pictured breed.)</p>
+
                         <div id="breed_grid">
 
                         </div>
@@ -356,7 +363,7 @@
 
                 </div><!--end div col-sm-5-->
 
-                <div class="col-sm-7 text-left">
+                <div class="col-sm-6 text-left grid_descripton">
 
 
                         <div id="breed_info">
@@ -364,10 +371,16 @@
                             
                         </div>
                         <div id="breed_chart"></div>
+                        <div id="description_source"></div>
 
-                </div><!--end div col-sm-7-->
+                </div><!--end div col-sm-8-->
 
             </div><!-- end div rowGrid content -->
+
+            <!--------------------------------->
+            <!-- end Marcia's breed-grid row -->
+            <!--------------------------------->
+   
         
         
             <!-------------------->
@@ -414,6 +427,7 @@
 <script src="js/names25.js"></script><!--Adam's bar chart for Top 25 dog names -->
 <script src="js/main.js"></script>
 <script src="js/line_chart.js"></script><!-- Marcia's line-chart file. Very messy, currently-->
+<script src="js/breed_info.js"></script><!-- Breed descriptions and such for breed-grid viz-->
 <script src="js/breed_grid.js"></script><!-- Marcia's breed-grid viz-->
 <script src="js/choropleth.js"></script><!-- Brittany's choropleth -->
 <script src="js/blockCalendar.js"></script><!-- Adam's block calendar -->
