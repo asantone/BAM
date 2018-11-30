@@ -6,6 +6,8 @@ var selected_breed = "";
 // turn provided dates to date objects
 // of one form or another
 var parseDate = d3.timeParse("%m/%-d/%y");
+var parseDateMY = d3.timeParse("%b %Y");
+
 // from Javier's code
 var monthYearFormat = d3.timeFormat("%b %Y");
 var  yearFormat = d3.timeFormat("%Y");
@@ -56,7 +58,8 @@ function loadData() {
         filteredBreedData.forEach(function(d) {
             // convert string to date object
             d.license_issue_date = parseDate(d.license_issue_date);
-            d.license_issue_date = monthYearFormat(d.license_issue_date);
+            d.license_issue_date = monthYearFormat(d.license_issue_date)
+            d.license_issue_date = parseDateMY(d.license_issue_date);
         })
 
         var countByDogBreed = [];
@@ -113,7 +116,7 @@ function createGrid(data) {
 
     // TOOLTIPS!!
     // Cannot use d3-tip on regular HTML elements, so trying advice from
-    // https://chartio.com/resources/tutorials/how-to-show-data-on-mouseover-in-d3js/#creating-a-tooltip-using-mouseover-events
+    // https://chartio.com/resources/tutorials/how-to-show-data-on-mouseover-in-d3js/#creating-a-tooltip-using-mouseover
 
 
     // Next up: string manipulation
@@ -244,7 +247,7 @@ function createGrid(data) {
             var dataByDogBreed = dogBreedData.filter(function(item) {
                 return item.primary_breed == selected_breed;
             });
-            // console.log(dataByDogBreed);
+            console.log(dataByDogBreed);
 
 
             // Group data by date (month) and count registrations for each month
@@ -257,8 +260,17 @@ function createGrid(data) {
                 })
                 .entries(dataByDogBreed);
 
-            // console.log("CountByDogBreed");
-            // console.log(countByDogBreed);
+            console.log("CountByDogBreed");
+            console.log(countByDogBreed);
+
+            // https://stackoverflow.com/questions/21984406/error-while-converting-date-string-to-date-object-in-firefox/21984717#21984717
+            //var str = '02-24-2014 09:22:21 AM';
+            //
+            // str = str.replace(/-/g,'/');  // replaces all occurances of "-" with "/"
+            //
+            // var dateObject = new Date(str);
+            //
+            // console.log(dateObject.toDateString());
 
            countByDogBreed.forEach(function (d) {
                 d.key = new Date(d.key);
@@ -301,11 +313,11 @@ function createGrid(data) {
             // via https://bl.ocks.org/NGuernse/58e1057b7174fd1717993e3f5913d1a7
             line.datum(countByDogBreed)
                 .attr("d", plotline)
-                .attr("style", "opacity: .3")
+                .attr("opacity", "0.3")
                 .transition()
                 .duration(500)
                 //.ease("linear")
-                .attr("style", "opacity: 1");
+                .attr("opacity", "1");
 
             // add title to chart
             breed_mini_viz.append("text")
