@@ -130,6 +130,7 @@ h5.Year2017 {
     font-weight: bold;
     text-align: center;
     margin-top: 2rem;
+    margin-left: -2rem;
 }
 
 h5.Year2018 {
@@ -152,6 +153,7 @@ h7 {
     margin: auto;
     font-weight: bold;
     text-align: center;
+    color: #639ac3
 
 }
 
@@ -215,7 +217,7 @@ ps {
 .col-sm-2
 {
     text-align: center;
-    padding-top: 60px;
+    padding-top: 20px;
     padding-left: 70px;
     padding-right: 70px;
 
@@ -223,14 +225,20 @@ ps {
 
 .col-sm-4
 {
-    text-align: left;
-    margin: auto;
+    text-align: center;
+
+    margin-top: 200px;
     padding-right: 80px;
 }
 
 .fa
 {
     margin-bottom: 10px;
+}
+
+#pets-adopted1
+{
+    text-align: center;
 }
 
 #img-foundation {
@@ -252,7 +260,7 @@ ps {
 
 .quote
 {
-    margin-top: 150px;
+    margin-top: 0px;
 }
 
 /*--------- Adam's Map ------------------------------------------------*/
@@ -265,59 +273,59 @@ ps {
 
 #viz1 {
     margin-left: 50px;
-    background-color: #636363;
+/*----- background-color: #636363; -------*/
 }
 
 
 .axis path,
 .axis line {
-  fill: none;
-  stroke: #f1f1f1;
-  shape-rendering: crispEdges;
+fill: none;
+stroke: #636363;
+shape-rendering: crispEdges;
 }
 .axis text {
-  font-size: 14px;
-  fill: #f1f1f1;
+font-size: 14px;
+fill: #636363;
 }
 
 .line {
-  fill: none;
-  stroke: #f1f1f1;
-  stroke-width: 2px;
+fill: none;
+stroke: #636363;
+stroke-width: 2px;
 }
 
 .line-single {
-    fill: none;
-    stroke: #f1f1f1;
-    stroke-width: 1px;
+ fill: none;
+ stroke: #636363;
+ stroke-width: 1px;
 }
 
 .line-mixed {
-    fill: none;
-    stroke: #f1f1f1;
-    stroke-width: 1px;
+ fill: none;
+ stroke: #636363;
+ stroke-width: 1px;
 }
 
 
 .overlay {
-    fill: none;
-    pointer-events: all;
+ fill: none;
+ pointer-events: all;
 }
 
 .focus circle {
-    fill: steelblue;
+ fill: steelblue;
 }
 
 .focus text {
-    font-size: 14px;
+ font-size: 14px;
 }
 
 
 .container-cover {
-    position: relative;
-    text-align: center;
-    color: white;
-    margin-bottom: 20px;
+ position: relative;
+ text-align: center;
+ color: white;
+ margin-bottom: 20px;
 }
 
 /* Centered text */
