@@ -11,7 +11,7 @@ var width1 = 750 - margin.left - margin.right,
 var svg1 = d3.select("#viz1").append("svg")
 		.attr("width", width1 + margin.left + margin.right)
 		.attr("height", height1 + margin.top + margin.bottom)
-        .attr("background-color","#475D74")
+        //.attr("background-color","#475D74")
 	    .append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -280,7 +280,7 @@ function loadData() {
             .attr ( "cx" , function ( d ) { return x(d.key) })
             .attr ( "cy" , function ( d ) { return y(d.value)})
             .attr ( "r" , 6 )
-            .style ( "fill" , "pink" )
+            .style ( "fill" , "#43a2ca" )
             .style ( "stroke" , "gray" )
             .style ( "stroke-width" , 0.3)
             .style ( "opacity" , 0 )
@@ -301,7 +301,7 @@ function loadData() {
             .attr ( "cx" , function ( d ) { return x(d.key) })
             .attr ( "cy" , function ( d ) { return y(d.value)})
             .attr ( "r" , 8 )
-            .style ( "fill" , "dd1c77" )// 43a2ca
+            .style ( "fill" , "#43a2ca" )// dd1c77
             .style ( "stroke" , "white" )
             .style ( "stroke-width" , 2)
             .style ( "opacity" , 0.9 );
