@@ -12,16 +12,28 @@
     stroke-width: 1px;
 }
 
-.viridis .q0-10{fill:rgb(68,1,84)}
-.viridis .q1-10{fill:rgb(71,39,117)}
-.viridis .q2-10{fill:rgb(62,72,135)}
-.viridis .q3-10{fill:rgb(49,102,141)}
-.viridis .q4-10{fill:rgb(38,130,141)}
-.viridis .q5-10{fill:rgb(36,157,136)}
-.viridis .q6-10{fill:rgb(55,181,120)}
-.viridis .q7-10{fill:rgb(109,204,88)}
-.viridis .q8-10{fill:rgb(176,221,49)}
-.viridis .q9-10{fill:rgb(253,231,37)}
+/*.viridis .q0-10{fill:rgb(68,1,84)}*/
+/*.viridis .q1-10{fill:rgb(71,39,117)}*/
+/*.viridis .q2-10{fill:rgb(62,72,135)}*/
+/*.viridis .q3-10{fill:rgb(49,102,141)}*/
+/*.viridis .q4-10{fill:rgb(38,130,141)}*/
+/*.viridis .q5-10{fill:rgb(36,157,136)}*/
+/*.viridis .q6-10{fill:rgb(55,181,120)}*/
+/*.viridis .q7-10{fill:rgb(109,204,88)}*/
+/*.viridis .q8-10{fill:rgb(176,221,49)}*/
+/*.viridis .q9-10{fill:rgb(253,231,37)}*/
+
+
+.viridis .q9-10{fill:rgb(183,224,216)}
+.viridis .q8-10{fill:rgb(168,210,207)}
+.viridis .q7-10{fill:rgb(153,196,198)}
+.viridis .q6-10{fill:rgb(139,182,190)}
+.viridis .q5-10{fill:rgb(124,168,181)}
+.viridis .q4-10{fill:rgb(110,154,173)}
+.viridis .q3-10{fill:rgb(95,140,164)}
+.viridis .q2-10{fill:rgb(81,126,156)}
+.viridis .q1-10{fill:rgb(66,112,147)}
+.viridis .q0-10{fill:rgb(52,99,139)}
 
 
 
