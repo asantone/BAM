@@ -111,10 +111,11 @@ h2 {
     margin-top: 6rem;
 }
 
+
 /*--------- Javier Custom Top Section ------------------------------------------------*/
 
 h3 {
-font-size: 24px;
+font-size: 22px;
     text-align: left;
     margin-left: 4rem;
 }
@@ -125,10 +126,12 @@ font-weight: bold;
     margin-top: 2rem;
 }
 
+
+
 h5.Year2017 {
     font-size: 32px;
     font-weight: bold;
-    text-align: center;
+    text-align: left;
     margin-top: 2rem;
     margin-left: -2rem;
 }
@@ -136,8 +139,11 @@ h5.Year2017 {
 h5.Year2018 {
     font-size: 32px;
     font-weight: bold;
-    text-align: center;
+
+    text-align: left;
     margin-top: 2rem;
+    margin-left: -2rem;
+
 }
 
 h6 {
@@ -148,14 +154,7 @@ h6 {
     margin-top: 2rem;
 }
 
-h7 {
-    font-size: 18px;
-    margin: auto;
-    font-weight: bold;
-    text-align: center;
-    color: #639ac3
 
-}
 
 h10 {
     font-size: 1em;
@@ -208,11 +207,12 @@ p {
 
 }
 
-ps {
+.ps {
         font-size: 1em;
-    text-align: justify;
+    text-align: left;
 
 }
+
 
 .col-sm-2
 {
@@ -225,15 +225,24 @@ ps {
 
 .col-sm-4
 {
-    text-align: center;
+    text-align: left;
 
     margin-top: 200px;
     padding-right: 80px;
 }
 
+.col-sm-8
+{
+
+    margin-top: 25px;
+    padding-right: 30px;
+}
+
+
 .fa
 {
     margin-bottom: 10px;
+
 }
 
 #pets-adopted1
@@ -249,6 +258,7 @@ ps {
 
 .image {
     padding-left: 80px;
+    padding-top: 10px;
     float:left;
 
 }
@@ -261,8 +271,8 @@ ps {
 .quote
 {
     margin-top: 0px;
+    text-align: left;
 }
-
 /*--------- Adam's Map ------------------------------------------------*/
 #map{ width:100%; height:500px; }
 .tooltip{ width: 80px; height: 80px; position: absolute; left: -9999p; }
