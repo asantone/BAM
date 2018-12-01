@@ -1,7 +1,20 @@
-
 .hide {
     display:none;
 }
+
+
+
+#choropleth
+{
+    height: 600px;
+    margin-left: 4rem;
+    margin-right: 4rem;
+    display: block;
+    position: relative;
+}
+
+
+
 
 
 #zip-details {
@@ -50,15 +63,34 @@
     margin-top: 3px;
 }
 
+.info {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+
 .legend {
-    font-size: 12px;
-    shape-rendering: crispEdges;
+    padding: 0px 0px;
+    font: 10px sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
 }
 
 .legend-title {
-    text-anchor: middle;
-    font-size: 14px;
-    shape-rendering: crispEdges;
+    font: 12px sans-serif;
+}
+
+.key path {
+    display: none;
 }
 
 
@@ -99,4 +131,6 @@
     top: 100%;
     left: 0;
 }
+
+
 
