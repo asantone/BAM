@@ -1,5 +1,4 @@
 
-
 // Initialize data
 var map;
 var pets;
@@ -12,31 +11,52 @@ var shelters = points.filter(function(el) {
 });
 
 
-// --> CREATE SVG DRAWING AREA
-var width = 600,
-    height = 600;
-
-var svg = d3.select("#choropleth").append("svg")
-    .attr("width", width)
-    .attr("height", height);
-
 
 // Set up map
-var projection = d3.geoAlbersUsa()
-    .translate([width*40.9, height*27.28])
-    .scale([80900]);
+// Access token
+var mapboxAccessToken = "pk.eyJ1IjoiYmNhbGxhbmRlciIsImEiOiJjanAzZWRvNWUwaDQ4M2tvYjZsYzdkdTY1In0.YrtqRgZBopVoGFYNMNUd4w";
 
-var path = d3.geoPath()
-    .projection(projection);
+// Direct to correct folder for leaflet images
+L.Icon.Default.imagePath = 'css/images/';
 
+// Draw map
+var choroMap = L.map('choropleth').setView([47.606209, -122.332069], 10);
+L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mapboxAccessToken, {
+    id: 'mapbox.light',
+}).addTo(choroMap);
+
+// Initialize map layers
+var zipsLayer;
+var animalShelters;
+
+// Initialize legend
+var legend_width = 200,
+    divisions = 100;
+var legend = L.control({position: 'bottomright'});
+legend.onAdd = function (choroMap) {var div = L.DomUtil.create('div', 'legend'); return div};
+legend.onRemove = function (choroMap) {delete choroMap.legend;};
+
+// Initialize info control box
+var info = L.control();
+info.onAdd = function (choroMap) {
+    this._div = L.DomUtil.create('div', 'info');
+    this.update();
+    return this._div;
+};
+info.update = function (props) {
+    this._div.innerHTML = (props ?
+        '<b>' + props["ZCTA5CE10"] + '</b><br />' + configs[index].tip + ": " + formatReal(props[selectID])
+        : 'Hover over a zipcode');
+};
+info.onRemove = function (choroMap) {delete choroMap.info;};
+
+
+
+// Color scale
 var color = d3.scaleLinear()
     .range(["#b7e0d8", "#34638b"])
     .interpolate(d3.interpolateLab);
 
-
-// Legend
-var legend_width = 200,
-    divisions = 100;
 
 
 // Listen for select box changes
@@ -44,10 +64,12 @@ var selectID = d3.select("#data-type").property("value");
 
 d3.select("#data-type").on("change", function() {
     selectID = d3.select("#data-type").property("value");
+
     // Get configs index for tooltip and map title
     index = configs.findIndex(function(config) {
         return config.key === selectID;
     });
+
     // Decide which number format to use in tooltip and legend
     if (selectID === "cat_all_cnt") {
         format = formatComma;
@@ -62,9 +84,18 @@ d3.select("#data-type").on("change", function() {
     } else if (selectID === "dog_median_size") {
         format = formatLb;
     }
+
+    // Update/remove section and map elements
     updateBlurb();
+    choroMap.removeLayer(zipsLayer);
+    choroMap.removeLayer(animalShelters);
+    choroMap.removeControl(legend);
+    choroMap.removeControl(info);
+
+    // Update map
     updateChoropleth();
 });
+
 
 
 // Format functions
@@ -102,15 +133,12 @@ var index = configs.findIndex(function(config) {
 
 
 
-// Tool tip
-var tool_tip = d3.tip()
-    .attr("class", "d3-tip")
-    .offset([-8, 0])
-    .html(function(d) { return "Zip Code: " + d.properties["ZCTA5CE10"] + "<br/>"  + configs[index].tip + ": " + formatReal(d.properties[selectID]) });
-
-svg.call(tool_tip);
-
-
+// Tool tip - Used on old map
+//var tool_tip = d3.tip()
+    //.attr("class", "d3-tip")
+    //.offset([-8, 0])
+    //.html(function(d) { return "Zip Code: " + d.properties["ZCTA5CE10"] + "<br/>"  + configs[index].tip + ": " + formatReal(d.properties[selectID]) });
+//svg.call(tool_tip);
 
 
 
@@ -120,15 +148,14 @@ svg.call(tool_tip);
 // Load data asynchronously
 queue()
     .defer(d3.json,"data/zip-codes.geo.json")
-    //.defer(d3.csv,"data/zip_stats_filtered.csv")
     .defer(d3.csv,"data/Zip_Stats.csv")
     .defer(d3.csv,"data/Census_PopFacts_WA_edit.csv")
     .defer(d3.csv,"data/seattle_neighborhoods.csv")
-    .await(createVis);
+    .await(initVis);
 
 
-// Create the map
-function createVis(error, mapJson, petData, demData, hoodData) {
+// Prep data
+function initVis(error, mapJson, petData, demData, hoodData) {
 
     if(error) { console.log(error); }
 
@@ -163,8 +190,6 @@ function createVis(error, mapJson, petData, demData, hoodData) {
     }
 
     pets = petData;
-
-
 
 
 
@@ -204,6 +229,8 @@ function createVis(error, mapJson, petData, demData, hoodData) {
 
 }
 
+
+
 function updateChoropleth() {
 
     // Set domain
@@ -213,65 +240,36 @@ function updateChoropleth() {
     ]);
 
 
-    // Draw map
-    var choroMap = svg.selectAll(".zip")
-        .data(map.features)
-        .attr("class", "zip");
-
-    // Exit old map colors
-    choroMap.exit().remove();
-
-    // Set up paths
-    choroMap.enter()
-        .append("path")
-        .attr("class", "zip")
-        .on('mouseover', tool_tip.show)
-        .on('mouseout', tool_tip.hide)
-        .on('click', function(d) {
-            updateDetails(d);
-        })
+    // Add choropleth layer
+    zipsLayer = L.geoJson(map, {
+        style: style,
+        onEachFeature: onEachFeature
+    }).addTo(choroMap);
 
 
-        // Update map
-        .merge(choroMap)
-        .transition()
-        .duration(800)
-        .attr("d", path)
-        .style("fill", function(d) {
-            var value = d.properties[selectID];
-            if (value) {
-                return color(value);
-            } else {
-                return "#dbdbdb";
-            }
-        });
+    // Add info control box
+    info.addTo(choroMap);
 
 
-    // Add points for shelters
-    svg.selectAll("circle")
-        .data(shelters)
-        .enter()
-        .append("circle")
-        .attr("class", "circle")
-        .attr("cx", function(d) {
-            return projection([d.latlng[1], d.latlng[0]])[0];
-        })
-        .attr("cy", function(d) {
-            return projection([d.latlng[1], d.latlng[0]])[1];
-        })
-        .attr("r", 3)
-        .style("fill", "#fae655")
-        .style("stroke", "#000000")
-        .style("stroke-width", 0.75)
-        .append("title")
-        .text("Animal Shelter");
+    // Add shelters
+    animalShelters = L.layerGroup().addTo(choroMap);
+    for (var i=0; i < points.length; i++) {
+
+        var lon = points[i].latlng[1];
+        var lat = points[i].latlng[0];
+        var popupText = "Animal Shelter";
+
+
+        var markerLocation = new L.LatLng(lat, lon);
+        var shelter = new L.Marker(markerLocation);
+        animalShelters.addLayer(shelter);
+
+        shelter.bindPopup(popupText);
+    }
 
 
 
-    // Remove old legend
-    d3.selectAll("g.legend").remove();
-
-    // Add legend
+    // Set up legend contents
     var newData = [];
     var sectionWidth = Math.floor(legend_width / divisions);
 
@@ -287,31 +285,47 @@ function updateChoropleth() {
         .interpolate(d3.interpolateLab)
         .range(["#b7e0d8", "#34638b"]);
 
-    legend = svg.selectAll("g.legend")
+    // Add legend control box
+    legend.addTo(choroMap);
+
+    // Remove old legend svg
+    d3.selectAll(".key").remove();
+
+
+    // Draw svg for legend within legend control box
+    var svg = d3.select(".legend.leaflet-control").append("svg")
+        .attr("id", 'legend')
+        .attr("width", 240)
+        .attr("height", 50);
+
+    var g = svg.append("g")
+        .attr("class", "key")
+        .attr("transform", "translate(10,16)");
+
+    g.selectAll("rect")
         .data(newData)
-        .enter().append("g")
-        .attr("class", "legend");
-
-    legend.append('rect')
-        .attr("x", function(d) { return d + 300; })
-        .attr("y", 530)
+        .enter().append("rect")
         .attr("height", 10)
+        .attr("x", function(d) { return d + 10; })
+        .attr("y", 5)
         .attr("width", sectionWidth)
-        .attr('fill', function(d, i) { return colorScaleLin(i)});
+        .style("fill", function(d, i) { return colorScaleLin(i)});
 
-    legend.append("text")
+    g.append("text")
         .text(function(){return formatReal(range_low);})
-        .attr("transform","translate(300,526)")
+        .attr("transform","translate(10,25)")
         .attr("text-anchor", "start");
-    legend.append("text")
+    g.append("text")
         .text(function(){return formatReal(range_high);})
-        .attr("transform","translate("+(legend_width+300)+",526)")
+        .attr("transform","translate("+(legend_width+10)+",25)")
         .attr("text-anchor", "end");
-    legend.append("text")
+    g.append("text")
         .attr("class", "legend-title")
         .text(function(){return configs[index].tip;})
-        .attr("transform","translate("+((legend_width/2)+300)+",555)")
+        .attr("transform","translate("+((legend_width/2)+10)+",0)")
         .attr("text-anchor", "middle");
+
+
 
 
     // Map title
@@ -319,11 +333,64 @@ function updateChoropleth() {
 
 }
 
-function updateDetails(data) {
+
+
+// Map functions
+// Color for choropleth layer
+function style(features) {
+    return {
+        fillColor: color(features.properties[selectID]),
+        weight: 2,
+        opacity: 1,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 0.7
+    };
+}
+
+// Highlight function on hover
+function highlightFeature(e) {
+    var layer = e.target;
+
+
+    layer.setStyle({
+        weight: 5,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+    });
+
+    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        layer.bringToFront();
+    }
+
+    info.update(layer.feature.properties);
+}
+
+// Reset highlight
+function resetHighlight(e) {
+    zipsLayer.resetStyle(e.target);
+    info.update();
+}
+
+// Master function for zip code layer events
+function onEachFeature(feature, layer) {
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+        click: updateDetails
+
+    });
+}
+
+// Function to update zip code details table
+function updateDetails(e) {
+
+    var layer = e.target;
 
     // get current zip for neighborhoods
     var currentZip = neighborhoods.findIndex(function(hood) {
-        return hood.zip_code === data.properties["ZCTA5CE10"];
+        return hood.zip_code === layer.feature.properties["ZCTA5CE10"];
     });
 
     // show zip code detail table
@@ -331,23 +398,24 @@ function updateDetails(data) {
 
     // populate table with current zip data
     $("#zip").text(function() {
-        return "Zip Code: " + data.properties["ZCTA5CE10"]
+        return "Zip Code: " + layer.feature.properties["ZCTA5CE10"]
     });
     $("#neighborhoods").text(function(d) {
         return neighborhoods[currentZip].neighborhoods;
     });
-    $("#tot-pets").text(formatComma(data.properties["total_all_cnt"]));
-    $("#tot-cats").text(formatComma(data.properties["cat_all_cnt"]));
-    $("#tot-dogs").text(formatComma(data.properties["dog_all_cnt"]));
-    $("#mix-dogs").text(formatPercent(data.properties["dog_mixed_explicit_perc"]));
-    $("#dog-weight").text(formatLb(data.properties["dog_median_size"]));
-    $("#mix-cats").text(formatPercent(data.properties["cat_mixed_explicit_perc"]));
-    $("#pop").text(formatComma(data.properties["Population"]));
-    $("#income").text(formatCurrency(data.properties["Med_HH_Inc"]));
-    $("#age").text(data.properties["Med_Age"]);
+    $("#tot-pets").text(formatComma(layer.feature.properties["total_all_cnt"]));
+    $("#tot-cats").text(formatComma(layer.feature.properties["cat_all_cnt"]));
+    $("#tot-dogs").text(formatComma(layer.feature.properties["dog_all_cnt"]));
+    $("#mix-dogs").text(formatPercent(layer.feature.properties["dog_mixed_explicit_perc"]));
+    $("#dog-weight").text(formatLb(layer.feature.properties["dog_median_size"]));
+    $("#mix-cats").text(formatPercent(layer.feature.properties["cat_mixed_explicit_perc"]));
+    $("#pop").text(formatComma(layer.feature.properties["Population"]));
+    $("#income").text(formatCurrency(layer.feature.properties["Med_HH_Inc"]));
+    $("#age").text(layer.feature.properties["Med_Age"]);
 
 }
 
+// Function to update blurb
 function updateBlurb() {
 
     if (selectID === "cat_all_cnt") {
