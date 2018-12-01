@@ -3,7 +3,7 @@ var filteredByDateData = data;
 
 
 // SVG drawing area
-var margin = {top: 40, right: 30, bottom: 40, left: 90};
+var margin = {top: 40, right: 30, bottom: 40, left: 50};
 
 var width1 = 750 - margin.left - margin.right,
 		height1 = 450 - margin.top - margin.bottom;
@@ -280,7 +280,7 @@ function loadData() {
             .attr ( "cx" , function ( d ) { return x(d.key) })
             .attr ( "cy" , function ( d ) { return y(d.value)})
             .attr ( "r" , 6 )
-            .style ( "fill" , "#43a2ca" )
+            .style ( "fill" , "#00aabd" )
             .style ( "stroke" , "gray" )
             .style ( "stroke-width" , 0.3)
             .style ( "opacity" , 0 )
@@ -301,11 +301,84 @@ function loadData() {
             .attr ( "cx" , function ( d ) { return x(d.key) })
             .attr ( "cy" , function ( d ) { return y(d.value)})
             .attr ( "r" , 8 )
-            .style ( "fill" , "#43a2ca" )// dd1c77
+            .style ( "fill" , "#00aabd" )// blue 43a2ca pink dd1c77
             .style ( "stroke" , "white" )
             .style ( "stroke-width" , 2)
             .style ( "opacity" , 0.9 );
 
+
+        ///ANNOTATIONS
+
+        const annotations = [
+            {
+                note: {
+                    label: "Seattle Animal Shelter Volunteer Program created ",
+                    title: "January 2017:"
+                },
+                x: 50,
+                y: 150,
+                dy: 137,
+                dx: 162
+            },{
+                note: {
+                    label: "Shelter receives a $75,000 Grant from the Petco Foundation",
+                    title: "April 2017",
+                    wrap: 150,
+                    align: "left"
+                },
+                connector: {
+                    end: "arrow" // 'dot' also available
+                },
+                x: 170,
+                y: 150,
+                dy: 137,
+                dx: 162
+            },{
+                note: {
+                    label: "First ever 'Free Adoption Weekend' event",
+                    title: "July 2017:",
+                    wrap: 150
+                },
+                connector: {
+                    end: "dot",
+                    type: "curve",
+                    //can also add a curve type, e.g. curve: d3.curveStep
+                    points: [[100, 14],[190, 52]]
+                },
+                x: 350,
+                y: 150,
+                dy: 137,
+                dx: 262
+            },{
+                //below in makeAnnotations has type set to d3.annotationLabel
+                //you can add this type value below to override that default
+                type: d3.annotationCalloutCircle,
+                note: {
+                    label: "Launch of the Clear the Shelters campaign' and new pet licensing portal",
+                    title: "August 2018:",
+                    wrap: 190
+                },
+                //settings for the subject, in this case the circle radius
+                subject: {
+                    radius: 50
+                },
+                x: 620,
+                y: 150,
+                dy: 137,
+                dx: 102
+            }].map(function(d){ d.color = "#E8336D"; return d})
+
+        const makeAnnotations = d3.annotation()
+            .type(d3.annotationLabel)
+            .annotations(annotations)
+
+        svg1.append("g")
+        //d3.select("svg1")
+          //  .append("g")
+            .attr("class", "annotation-group")
+            .call(makeAnnotations)
+
+        ///END
 
 
         // var tip2 = d3.tip()
