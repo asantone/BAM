@@ -244,6 +244,18 @@ data.forEach(function(d) {
 x.domain([0, d3.max(data, function(d){ return d.perc; })])
 y.domain(data.map(function(d) { return d.uniques; }));
 
+
+//tooltips
+
+var bartip = d3.tip()
+    .attr('class', 'd3-tip')
+    .offset([-10, 0])
+    .html(function(d) {
+        return "The name "+(d.uniques)+ " represents " + "<br>" + (d.perc) + "% of the population.";
+    });
+
+svg.call(bartip);
+
 // append the rectangles for the bar chart
 svg.selectAll(".bar")
     .data(data)
@@ -252,14 +264,8 @@ svg.selectAll(".bar")
     .attr("width", function(d) {return x(d.perc); } )
     .attr("y", function(d) { return y(d.uniques); })
     .attr("height", y.bandwidth())
-    .on("mousemove", function(d){
-    tt
-        .style("left", d3.event.pageX - 50 + "px")
-        .style("top", d3.event.pageY - 70 + "px")
-        .style("display", "inline-block")
-        .html("The name "+(d.uniques)+ " represents " + "<br>" + (d.perc) + "% of the population.");
-})
-    .on("mouseout", function(d){ tt.style("display", "none");});
+    .on('mouseover', bartip.show)
+    .on('mouseout', bartip.hide);
 
 // text label for the x axis
 svg.append("text")
