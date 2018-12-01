@@ -397,6 +397,7 @@ stroke-width: 2px;
 .grid_column {
     padding-right: 0;
     margin-bottom: 4rem;
+    margin-top: 0;
     padding-left: 2.75rem;
 }
 
