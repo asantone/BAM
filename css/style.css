@@ -111,6 +111,23 @@ h2 {
     margin-top: 6rem;
 }
 
+#anchor_daily_trends {
+     margin-top: 3rem;
+ }
+
+#anchor_registrations_by_area {
+    margin-top: -2rem;
+    padding-top: 0;
+}
+
+#anchor_dog_names {
+    margin-top: 6rem;
+}
+
+#anchor_dog_breeds {
+    margin-top: 0rem;
+}
+
 
 /*--------- Javier Custom Top Section ------------------------------------------------*/
 
