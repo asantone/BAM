@@ -9,7 +9,7 @@
 //var height = 120;
 var cellSize = 16; // cell size
 
-var margin = {top: 5, right: 5, bottom: 5, left: 5},
+var margin = {top: 5, right: 5, bottom: 5, left: -100},
     padding = {top: 20, right: 20, bottom: 20, left: 20},
     outerWidth = 1000,
     outerHeight = 180,
