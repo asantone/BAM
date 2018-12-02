@@ -5,6 +5,84 @@
 // "D3 + Leaflet"
 // http://bl.ocks.org/1Cr18Ni9/d72b6ba95285b80fe4c7498e784a8e0c
 
+
+
+// Load adoption sites csv
+d3.csv("data/adoptionSites.csv", function(error, csv) {
+
+    if(error) { console.log(error); }
+
+    // Change lat & long to numeric
+    csv.forEach(function(d) {
+        d.lat =+ d.lat;
+        d.lon =+ d.lon;
+    });
+
+
+    // Attributes for shelter icons
+    var dogIconBase = L.Icon.extend({
+        options: {
+
+            iconSize:     [30, 30], // size of the icon
+            iconAnchor:   [15, 0], // point of the icon which will correspond to marker's location
+
+        }
+    });
+
+    var dogIcon = new dogIconBase({iconUrl: 'img/dog.png'});
+
+
+
+    // Add markers
+    var pointsGroup = L.layerGroup();
+    csv.forEach(function(d){
+
+        var popupText = "<strong>" + d.name + "</strong><br/>";
+            popupText += d.address + "<br/>";
+            popupText += "<a href='" + d.website + "'target=\"_blank\">Website</a>";
+
+        L.marker([d.lat, d.lon],{icon: dogIcon},{ achieve: d.achieve }).addTo(pointsGroup)
+            .bindPopup(popupText);
+
+    });
+
+
+
+    // Add layers and draw map
+    var layer1 = L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+            detectRetina: true,
+            attribution: "&copy; " + "<a href='http://openstreetmap.org'>OpenStreetMap</a>" + " Contributors"
+        }),
+//     layer2 = L.tileLayer("https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png", {
+//         attribution: "Thunderforest"
+//     }),
+        layer3 = L.tileLayer.wms("https://basemap.nationalmap.gov/ArcGIS/services/USGSImageryTopo/MapServer/WMSServer", {
+            layers: "0",
+            format: "image/png",
+            transparent: false,
+            attribution: "USGS"
+        });
+
+    var baseLayers = {
+            "osm": layer1 //,
+            //"thunderforest": layer2
+        },
+        subLayers = { "USGS": layer3, "Points": pointsGroup };
+
+    var map = L.map("map", {
+        center: [47.7, -122.3],
+        zoom: 10,
+        layers: [layer1, pointsGroup]
+    });
+
+    L.control.layers(baseLayers, subLayers, {position: "topright"}).addTo(map);
+
+});
+
+
+
+
+
 //these are locations of pet adoption sites/stores (see data/adoptionSites.csv for details)
 //the 'achieve' part is legacy from the example I was basing this on...could be used for other purposes related to pet adoption? 
 var points = [
@@ -24,57 +102,24 @@ var points = [
     {latlng: [	47.858855	,	-122.292621	],  achieve: 0.34}
 ];
 
-var dogIconBase = L.Icon.extend({
-    options: {
 
-        iconSize:     [30, 30], // size of the icon
-        iconAnchor:   [15, 0], // point of the icon which will correspond to marker's location
 
-    }
-});
-
-var dogIcon = new dogIconBase({iconUrl: 'img/dog.png'});
-
-var pointsGroup = L.layerGroup();
-points.forEach(function(d){
+// Old code prior to update
+//points.forEach(function(d){
 
     // L.marker([47.39707,8.54942],{icon: greenIcon}).addTo(map)
     //     .bindPopup('A pretty CSS3 popup. &lt;br&gt; Easily customizable.');
 
     // binding data to marker object's option
-    L.marker(d.latlng,{icon: dogIcon},{ achieve: d.achieve })
+    //L.marker(d.latlng,{icon: dogIcon},{ achieve: d.achieve })
         //.on("mouseover", onMouseOver)
         //.on("mouseout", onMouseOut)
-        .addTo(pointsGroup);
-});
+        //.addTo(pointsGroup);
+//});
 
-var layer1 = L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
-        detectRetina: true,
-        attribution: "&copy; " + "<a href='http://openstreetmap.org'>OpenStreetMap</a>" + " Contributors"
-    }),
-//     layer2 = L.tileLayer("https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png", {
-//         attribution: "Thunderforest"
-//     }),
-    layer3 = L.tileLayer.wms("https://basemap.nationalmap.gov/ArcGIS/services/USGSImageryTopo/MapServer/WMSServer", {
-        layers: "0",
-        format: "image/png",
-        transparent: false,
-        attribution: "USGS"
-    });
 
-var baseLayers = {
-        "osm": layer1 //,
-        //"thunderforest": layer2
-    },
-    subLayers = { "USGS": layer3, "Points": pointsGroup };
 
-var map = L.map("map", {
-    center: [47.7, -122.3],
-    zoom: 10,
-    layers: [layer1, pointsGroup]
-});
 
-L.control.layers(baseLayers, subLayers, {position: "topright"}).addTo(map);
 
 
 //mouseover not working due to something in the tooltips
