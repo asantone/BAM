@@ -323,7 +323,8 @@ function updateChoropleth() {
         .attr("class", "legend-title")
         .text(function(){return configs[index].tip;})
         .attr("transform","translate("+((legend_width/2)+10)+",0)")
-        .attr("text-anchor", "middle");
+        .attr("text-anchor", "middle")
+        .style("color", "black");
 
 
 
