@@ -324,7 +324,7 @@ function updateChoropleth() {
         .text(function(){return configs[index].tip;})
         .attr("transform","translate("+((legend_width/2)+10)+",0)")
         .attr("text-anchor", "middle")
-        .style("color", "black");
+        .attr("color", "black");
 
 
 
