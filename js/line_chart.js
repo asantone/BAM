@@ -1,3 +1,4 @@
+//"use strict";
 
 var filteredByDateData = data;
 
@@ -6,7 +7,7 @@ var filteredByDateData = data;
 var margin = {top: 40, right: 30, bottom: 40, left: 50};
 
 var width1 = 750 - margin.left - margin.right,
-		height1 = 450 - margin.top - margin.bottom;
+		height1 = 400 - margin.top - margin.bottom;
 
 var svg1 = d3.select("#viz1").append("svg")
 		.attr("width", width1 + margin.left + margin.right)
@@ -103,57 +104,57 @@ function loadData() {
 
 ///FILTER MIXED
 
-        countRegByDateMix = d3.nest()
-            .key(function (d) {
-                //formatDate = d3.time.format("%b-%Y");
-                return  d.license_issue_date; //formatDate()
-
-            })
-            .rollup(function (leaves) {
-                return leaves.length;
-            })
-            .entries(filtereddata.filter(
-                function ( d ) {
-                    return (d.combo_breed_group == "Mix (Inferred)" || d.combo_breed_group == "Mix (Explicit)"  )
-                }
-            ));
-
-
-        countRegByDateMix.forEach(function (d) {
-            d.key = new Date(d.key);
-        });
-
-        countRegByDateMix.sort(function (a, b) {
-            return d3.ascending(a.key, b.key);
-        });
+        // countRegByDateMix = d3.nest()
+        //     .key(function (d) {
+        //         //formatDate = d3.time.format("%b-%Y");
+        //         return  d.license_issue_date; //formatDate()
+        //
+        //     })
+        //     .rollup(function (leaves) {
+        //         return leaves.length;
+        //     })
+        //     .entries(filtereddata.filter(
+        //         function ( d ) {
+        //             return (d.combo_breed_group == "Mix (Inferred)" || d.combo_breed_group == "Mix (Explicit)"  )
+        //         }
+        //     ));
+        //
+        //
+        // countRegByDateMix.forEach(function (d) {
+        //     d.key = new Date(d.key);
+        // });
+        //
+        // countRegByDateMix.sort(function (a, b) {
+        //     return d3.ascending(a.key, b.key);
+        // });
 
 
 
 ///FILTER SINGLE
 
-        countRegByDateSingle = d3.nest()
-            .key(function (d) {
-                //formatDate = d3.time.format("%b-%Y");
-                return  d.license_issue_date; //formatDate()
-
-            })
-            .rollup(function (leaves) {
-                return leaves.length;
-            })
-            .entries(filtereddata.filter(
-                function ( d ) {
-                    return (d.combo_breed_group == "SingleBreed"  )
-                }
-            ));
-
-
-        countRegByDateSingle.forEach(function (d) {
-            d.key = new Date(d.key);
-        });
-
-        countRegByDateSingle.sort(function (a, b) {
-            return d3.ascending(a.key, b.key);
-        });
+        // countRegByDateSingle = d3.nest()
+        //     .key(function (d) {
+        //         //formatDate = d3.time.format("%b-%Y");
+        //         return  d.license_issue_date; //formatDate()
+        //
+        //     })
+        //     .rollup(function (leaves) {
+        //         return leaves.length;
+        //     })
+        //     .entries(filtereddata.filter(
+        //         function ( d ) {
+        //             return (d.combo_breed_group == "SingleBreed"  )
+        //         }
+        //     ));
+        //
+        //
+        // countRegByDateSingle.forEach(function (d) {
+        //     d.key = new Date(d.key);
+        // });
+        //
+        // countRegByDateSingle.sort(function (a, b) {
+        //     return d3.ascending(a.key, b.key);
+        // });
 
 
         // Scales and axes
@@ -213,20 +214,20 @@ function loadData() {
             //.y0(height1)
             .y(function(d) { return y(d.value); });
 
-        var line2 = d3.line()
-        //.interpolate("basis")
-            //.curve(d3.curveBasis)
-            .x(function(d) { return x(d.key); })
-            //.y0(height1)
-            .y(function(d) { return y(d.value); });
-
-
-        var line3 = d3.line()
-        //.interpolate("basis")
-        //.curve(d3.curveBasis)
-            .x(function(d) { return x(d.key); })
-            //.y0(height1)
-            .y(function(d) { return y(d.value); });
+        // var line2 = d3.line()
+        // //.interpolate("basis")
+        //     //.curve(d3.curveBasis)
+        //     .x(function(d) { return x(d.key); })
+        //     //.y0(height1)
+        //     .y(function(d) { return y(d.value); });
+        //
+        //
+        // var line3 = d3.line()
+        // //.interpolate("basis")
+        // //.curve(d3.curveBasis)
+        //     .x(function(d) { return x(d.key); })
+        //     //.y0(height1)
+        //     .y(function(d) { return y(d.value); });
 
         // SVG area path generator
         //var line2 = d3.line()
@@ -256,22 +257,22 @@ function loadData() {
             .attr("d", line1)
             .call(transition);
 
-        console.log(x(countRegByDate[2].key));
-
-        var tip = d3.tip()
-            .attr('class', 'd3-tip')
-            .offset([-10, 0])
-            .html(function(d) {
-                return "<strong>"+ monthYearFormat(d.key)+" </strong> <br> <br> Pet Licenses  <br> <span style='color:white'>" + d.value + "</span>";
-            });
-
-        svg1.call(tip);
+        // console.log(x(countRegByDate[2].key));
+        //
+        // var tip = d3.tip()
+        //     .attr('class', 'd3-tip')
+        //     .offset([-10, 0])
+        //     .html(function(d) {
+        //         return "<strong>"+ monthYearFormat(d.key)+" </strong> <br> <br> Pet Licenses  <br> <span style='color:white'>" + d.value + "</span>";
+        //     });
+        //
+        // svg1.call(tip);
 
 
         svg1.selectAll( "circle" )
             .data ( countRegByDate.filter(
                 function ( d ) {
-                    return ( monthYearFormat(d.key) == "Apr 2017"  || monthYearFormat(d.key) == "Jul 2017"  || monthYearFormat(d.key) == "Jan 2018" || monthYearFormat(d.key) == "Apr 2018"  || monthYearFormat(d.key) == "Sep 2018"  )
+                    return ( monthYearFormat(d.key) == "Jan 2017"  || monthYearFormat(d.key) == "Apr 2017"  || monthYearFormat(d.key) == "Jul 2017"  || monthYearFormat(d.key) == "Jan 2018" || monthYearFormat(d.key) == "Apr 2018"  || monthYearFormat(d.key) == "Sep 2018"  )
                 } ))
 
             .enter()
@@ -280,103 +281,124 @@ function loadData() {
             .attr ( "cx" , function ( d ) { return x(d.key) })
             .attr ( "cy" , function ( d ) { return y(d.value)})
             .attr ( "r" , 6 )
-            .style ( "fill" , "#00aabd" )
+            .style ( "fill" , "#0078A8" )
             .style ( "stroke" , "gray" )
             .style ( "stroke-width" , 0.3)
             .style ( "opacity" , 0 )
 
-            .on('mouseover', tip.show)
-            .on('mouseout', tip.hide)
+            // .on('mouseover', tip.show)
+            //.on('mouseout', tip.hide)
 
         ;
 
         svg1.selectAll("circle")
             .data ( countRegByDate.filter(
                 function ( d ) {
-                    return ( monthYearFormat(d.key) == "Apr 2017"  || monthYearFormat(d.key) == "Jul 2017"  || monthYearFormat(d.key) == "Jan 2018" || monthYearFormat(d.key) == "Apr 2018"  || monthYearFormat(d.key) == "Sep 2018"  )
+                    return ( monthYearFormat(d.key) == "Jan 2017"  || monthYearFormat(d.key) == "Apr 2017"  || monthYearFormat(d.key) == "Jul 2017"  || monthYearFormat(d.key) == "Jan 2018" || monthYearFormat(d.key) == "Apr 2018"  || monthYearFormat(d.key) == "Sep 2018"  )
                 } ))
             .transition()
-            .delay(9000)					// <-- A static, 1s delay before transition begins
-            .duration(2000)
+            .delay(0)					// <-- A static, 1s delay before transition begins
+            .duration(1500)
             .attr ( "cx" , function ( d ) { return x(d.key) })
             .attr ( "cy" , function ( d ) { return y(d.value)})
             .attr ( "r" , 8 )
-            .style ( "fill" , "#00aabd" )// blue 43a2ca pink dd1c77
+            .style ( "fill" , "#0078A8" )// blue 00aabd 43a2ca pink dd1c77
             .style ( "stroke" , "white" )
             .style ( "stroke-width" , 2)
-            .style ( "opacity" , 0.9 );
+            .style ( "opacity" , 0.95 );
 
 
-        ///ANNOTATIONS
 
-        const annotations = [
-            {
-                note: {
-                    label: "Seattle Animal Shelter Volunteer Program created ",
-                    title: "January 2017:"
-                },
-                x: 50,
-                y: 150,
-                dy: 137,
-                dx: 162
-            },{
-                note: {
-                    label: "Shelter receives a $75,000 Grant from the Petco Foundation",
-                    title: "April 2017",
-                    wrap: 150,
-                    align: "left"
-                },
-                connector: {
-                    end: "arrow" // 'dot' also available
-                },
-                x: 170,
-                y: 150,
-                dy: 137,
-                dx: 162
-            },{
-                note: {
-                    label: "First ever 'Free Adoption Weekend' event",
-                    title: "July 2017:",
-                    wrap: 150
-                },
-                connector: {
-                    end: "dot",
-                    type: "curve",
-                    //can also add a curve type, e.g. curve: d3.curveStep
-                    points: [[100, 14],[190, 52]]
-                },
-                x: 350,
-                y: 150,
-                dy: 137,
-                dx: 262
-            },{
-                //below in makeAnnotations has type set to d3.annotationLabel
-                //you can add this type value below to override that default
-                type: d3.annotationCalloutCircle,
-                note: {
-                    label: "Launch of the Clear the Shelters campaign' and new pet licensing portal",
-                    title: "August 2018:",
-                    wrap: 190
-                },
-                //settings for the subject, in this case the circle radius
-                subject: {
-                    radius: 50
-                },
-                x: 620,
-                y: 150,
-                dy: 137,
-                dx: 102
-            }].map(function(d){ d.color = "#E8336D"; return d})
 
-        const makeAnnotations = d3.annotation()
-            .type(d3.annotationLabel)
-            .annotations(annotations)
+
+        ///TOOLTIPS NEW
+
+        var parseTime2 = d3.timeParse("%d-%b-%y");
+        var _x = d3.scaleTime().range([0, width1]);
+        var _y = d3.scaleLinear().range([height1, 0]);
+
+        _x.domain(d3.extent(countRegByDate, function (d) {
+            return d.key;
+        }));
+        _y.domain([0, d3.max(countRegByDate, function (d) {
+            return d.value;
+        })]);
+
+        console.log(_x);
+        console.log(_y);
+
+        //Add annotations
+        var labels = [{
+            data: { date: "1-Jan-17", close: 1232, desc: "Seattle Animal Shelter Volunteer Program Starts" },
+            dy: 35,
+            dx: 20
+        }, {
+            data: { date: "1-Apr-17", close: 1273, desc:"Shelter Receives a $75,000 Grant from the Petco Foundation" },
+            dy: 32,
+            dx: 20,
+            note: { align: "middle" }
+        }, {
+            data: { date: "1-Jul-17", close: 1769, desc:"First Ever 'Free Adoption Weekend' Held" },
+            dy: -35,
+            dx: -20,
+            note: { align: "right" }
+        }, {
+            data: { date: "1-Jan-18", close: 2663, desc:"KIRO7 TV News Segment Airs" },
+            dy: 60,
+            dx: 0,
+            note: { align: "middle" }
+        }, {
+            data: { date: "1-Apr-18", close: 3278, desc:"Seattle Times Press Coverage" },
+            dy: 80,
+            dx: 0,
+            note: { align: "left" }
+        }, {
+            data: { date: "1-Sep-18", close: 2789, desc:"'Clear the Shelters' Campaign and New Pet Licensing Portal Launched" },
+            dy: 65,
+            dx: 0,
+            note: { align: "right" }
+        }].map(function (l) {
+            l.note = Object.assign({}, l.note, { title: ""  + l.data.desc,
+                label: "" + monthYearFormat(parseTime2((l.data.date))) });
+            l.subject = { radius: 8 };
+
+            return l;
+        });
+
+        console.log(labels);
+
+        var timeFormat = d3.timeFormat("%d-%b-%y");
+
+        window.makeAnnotations = d3.annotation().annotations(labels).type(d3.annotationCalloutCircle).accessors({ x: function x(d) {
+                //console.log(_x(parseTime2(d.date)));
+                //console.log(parseTime2(d.date));
+                //console.log((d.date));
+            return _x(parseTime2(d.date));
+
+            },
+            y: function y(d) {
+                //console.log(_y(d.close));
+                return _y(d.close);
+            }
+        }).accessorsInverse({
+            date: function date(d) {
+                return timeFormat(_x.invert(d.x));
+            },
+            close: function close(d) {
+                return _y.invert(d.y);
+            }
+        }).on('subjectover', function (annotation) {
+            annotation.type.a.selectAll("g.annotation-connector, g.annotation-note").classed("hidden", false);
+        }).on('subjectout', function (annotation) {
+            annotation.type.a.selectAll("g.annotation-connector, g.annotation-note").classed("hidden", true);
+        });
 
         svg1.append("g")
-        //d3.select("svg1")
-          //  .append("g")
-            .attr("class", "annotation-group")
-            .call(makeAnnotations)
+                      .attr("class", "annotation-test").call(makeAnnotations);
+
+        svg1.selectAll("g.annotation-connector, g.annotation-note")
+            .classed("hidden", true);
+    });
 
         ///END
 
@@ -432,7 +454,8 @@ function loadData() {
 
         d3.select("h5.Year2017")
             .transition()
-            .duration(5000)
+            .duration(4000)
+            .delay(4000)
             .on("start", function repeat() {
                 d3.active(this)
                     .tween("text", function() {
@@ -448,8 +471,8 @@ function loadData() {
 
         d3.select("h5.Year2018")
             .transition()
-            .duration(4000)
-            .delay(5000)
+            .duration(3000)
+            .delay(8000)
             .on("start", function repeat() {
                 d3.active(this)
                     .tween("text", function() {
@@ -458,7 +481,7 @@ function loadData() {
                         return function(t) { that.text(format(i(t))); };
                     })
                     .transition()
-                    .delay(5000)
+                    .delay(0)
                     .on("start", repeat);
             });
 
@@ -625,8 +648,6 @@ function loadData() {
     //     console.log("countRegByDateYear is ");
     //     console.log(countRegByDateYear);
     //
-
-     });
 
 
 	}// end loadData function
