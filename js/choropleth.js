@@ -314,17 +314,19 @@ function updateChoropleth() {
     g.append("text")
         .text(function(){return formatReal(range_low);})
         .attr("transform","translate(10,25)")
-        .attr("text-anchor", "start");
+        .attr("text-anchor", "start")
+        .style("fill", "black");
     g.append("text")
         .text(function(){return formatReal(range_high);})
         .attr("transform","translate("+(legend_width+10)+",25)")
-        .attr("text-anchor", "end");
+        .attr("text-anchor", "end")
+        .style("fill", "black");
     g.append("text")
         .attr("class", "legend-title")
         .text(function(){return configs[index].tip;})
         .attr("transform","translate("+((legend_width/2)+10)+",0)")
         .attr("text-anchor", "middle")
-        .attr("color", "black");
+        .style("fill", "black");
 
 
 
