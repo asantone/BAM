@@ -452,9 +452,9 @@ function loadData() {
 
         var format = d3.format(",d");
 
-        d3.select("h5.Year2017")
+     d3.select("h5.Year2017")
             .transition()
-            .duration(4000)
+            .duration(3800)
             .delay(4000)
             .on("start", function repeat() {
                 d3.active(this)
@@ -472,7 +472,7 @@ function loadData() {
         d3.select("h5.Year2018")
             .transition()
             .duration(3000)
-            .delay(8000)
+            .delay(7800)
             .on("start", function repeat() {
                 d3.active(this)
                     .tween("text", function() {
