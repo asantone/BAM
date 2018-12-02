@@ -210,7 +210,7 @@ data = data.sort(function (a, b) {
 })
 
 // set the dimensions and margins of the graph
-var margin = {top: 10, right: 10, bottom: 35, left: 50},
+var margin = {top: 10, right: 10, bottom: 35, left: 100},
     width = 960 - margin.left - margin.right,
     height = 430 - margin.top - margin.bottom;
 
